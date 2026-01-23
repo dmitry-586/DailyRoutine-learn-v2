@@ -1,4 +1,5 @@
 import { QueryProvider } from '@/shared/lib/query-client'
+import MainLayout from '@/shared/providers/MainLayout'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -20,8 +21,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ru'>
-      <body className={`${inter.variable} antialiased`}>
-        <QueryProvider>{children}</QueryProvider>
+      <body
+        className={`${inter.variable} custom-scrollbar antialiased`}
+      >
+        <MainLayout>
+          <QueryProvider>{children}</QueryProvider>
+        </MainLayout>
       </body>
     </html>
   )

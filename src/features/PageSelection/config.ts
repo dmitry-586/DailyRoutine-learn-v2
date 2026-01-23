@@ -10,17 +10,17 @@ import type { LinkProps } from './types'
 export const pageLinks: LinkProps[] = [
   {
     id: 1,
-    title: 'Карточки',
-    description: 'Запоминайте с помощью карточек',
-    href: '/cards',
-    icon: BookCopy,
-  },
-  {
-    id: 2,
     title: 'Теория',
     description: 'Изучайте теорию по главам',
     href: '/theory',
     icon: BookText,
+  },
+  {
+    id: 2,
+    title: 'Карточки',
+    description: 'Запоминайте с помощью карточек',
+    href: '/cards',
+    icon: BookCopy,
   },
   {
     id: 3,

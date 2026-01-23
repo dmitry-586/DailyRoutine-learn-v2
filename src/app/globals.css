@@ -24,14 +24,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter);
-  height: 100vh;
-}
-
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--gray) transparent;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  min-height: 100%;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
