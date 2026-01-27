@@ -1,88 +1,67 @@
 'use client'
+
+import { FlipCard, FlipCardProps, NavButtons } from '@/features/FlipCard'
+import { Button } from '@/shared/ui'
 import { useState } from 'react'
 
-interface FlipCardProps {
-  question: string
-  answer: string
-}
-
-function FlipCard({ question, answer }: FlipCardProps) {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  const handleClick = () => {
-    setIsFlipped(!isFlipped);
-  };
-
-  return (
-    <div className="flex justify-center">
-      <div 
-        className="relative w-xs h-100 cursor-pointer"
-        style={{ perspective: '1000px' }}
-        onClick={handleClick}
-      >
-        <div
-          className={`relative w-full h-full transition-transform duration-500 ${
-            isFlipped ? 'rotate-y-180' : ''
-          }`}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          {/* Передняя сторона */}
-          <div 
-            className="absolute w-full h-full bg-gray/40 border border-white/10 rounded-2xl px-4 py-6 shadow-sm hover:border-primary/50 hover:bg-gray/60 hover:shadow-lg transition-all duration-300"
-            style={{ backfaceVisibility: 'hidden' }}
-          >
-            <div className="flex flex-col h-full items-center justify-center text-center">
-              <h3 className="text-lg text-white/70">{question}</h3>
-              <p className="mt-4 text-sm text-white/50">Нажмите для ответа</p>
-            </div>
-          </div>
-          
-          {/* Задняя сторона */}
-          <div 
-            className="absolute w-full h-full bg-gray/40 border border-white/10 rounded-2xl px-4 py-6 shadow-sm hover:border-primary/50 hover:bg-gray/60 hover:shadow-lg transition-all duration-300"
-            style={{ 
-              backfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)' 
-            }}
-          >
-            <div className="flex flex-col h-full items-center justify-center text-center">
-              <h3 className="text-lg text-white/70 whitespace-pre-line">{answer}</h3>
-              <p className="mt-4 text-sm text-white/50">Нажмите для возврата</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+const mock: FlipCardProps[] = [
+  {
+    question:
+      'Опишите, что происходит, когда пользователь вводит URL в браузер',
+    answer:
+      'Проверка кэша DNS-резолв TCP-handshake TLS-handshake (если HTTPS) HTTP-запрос Парсинг HTML Загрузка CSS/JS Рендеринг',
+  },
+  {
+    question: 'Что такое event loop и как он работает в JavaScript?',
+    answer:
+      'Цикл событий обрабатывает call stack и callback queue. Call stack исполняет синхронный код, microtasks (Promise) имеют приоритет перед macrotasks (setTimeout). Один tick: выполнить код → microtasks → один macrotask → повторить.',
+  },
+  {
+    question: 'Чем отличаются var, let и const?',
+    answer:
+      'var — function-scoped, hoisting, можно переобъявлять. let/const — block-scoped, temporal dead zone до объявления. const нельзя переназначить (но объект/массив мутабельны). let допускает переприсваивание.',
+  },
+  {
+    question: 'Что такое React Virtual DOM и зачем он нужен?',
+    answer:
+      'Лёгкая копия реального DOM в памяти. При изменении state React строит новый virtual tree, сравнивает с предыдущим (reconciliation), затем делает минимальный набор изменений в реальном DOM — меньше лишних перерисовок и выше производительность.',
+  },
+  {
+    question: 'Объясните разницу между SSR, SSG и CSR',
+    answer:
+      'SSR — рендер на сервере при каждом запросе, актуальный контент, нагрузка на сервер. SSG — статика при сборке, быстрая отдача, подходит для контента без частых изменений. CSR — рендер в браузере после загрузки JS, хорош для SPA, слабее для SEO без доп. решений.',
+  },
+]
 
 export default function Cards() {
+  const [cardIndex, setCardIndex] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+
   return (
-    <>
-      <section
-        className='flex flex-col items-center justify-center'
-        aria-labelledby='main-heading'
-      >
-        <div className='text-center'>
-          <h1 id='main-heading' className='text-3xl font-bold'>
-            Daily Routine <span className='text-primary'>Learn</span>
-          </h1>
-          <p className='mt-2 text-lg text-white/70'>
-            Карточки для закрепления изученного материала
-          </p>
+    <section className='flex flex-col items-center justify-center'>
+      <div className='text-center'>
+        <h1 className='text-3xl font-bold'>
+          Daily Routine <span className='text-primary'>Learn</span>
+        </h1>
+        <p className='mt-2 text-lg text-white/70'>
+          Карточки для закрепления изученного материала
+        </p>
+      </div>
+      {!isVisible ? (
+        <Button onClick={() => setIsVisible(true)}>Начать</Button>
+      ) : (
+        <div>
+          <FlipCard
+            question={mock[cardIndex].question}
+            answer={mock[cardIndex].answer}
+          />
+          <NavButtons
+            cardIndex={cardIndex}
+            setCardIndex={setCardIndex}
+            totalCards={mock.length - 1}
+          />
         </div>
-      </section>
-      <FlipCard
-        question='Опишите, что происходит, когда пользователь вводит URL в браузер'
-        answer={`Проверка кэша
-DNS-резолв
-TCP-handshake
-TLS-handshake (если HTTPS)
-HTTP-запрос
-Парсинг HTML
-Загрузка CSS/JS
-Рендеринг`}
-      />
-    </>
+      )}
+    </section>
   )
 }
