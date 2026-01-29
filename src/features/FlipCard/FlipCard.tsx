@@ -5,11 +5,12 @@ import { useState } from 'react'
 import { Side } from './Side'
 
 export interface FlipCardProps {
+  type: string
   question: string
   answer: string
 }
 
-export function FlipCard({ question, answer }: FlipCardProps) {
+export function FlipCard({ type, question, answer }: FlipCardProps) {
   const [isFlipped, setIsFlipped] = useState(false)
 
   const handleClick = () => {
@@ -24,8 +25,8 @@ export function FlipCard({ question, answer }: FlipCardProps) {
         isFlipped && 'rotate-y-180',
       )}
     >
-      <Side title={question} variant='front' />
-      <Side title={answer} variant='back' />
+      <Side group={type} title={question} variant='front' />
+      <Side group='' title={answer} variant='back' />
     </div>
   )
 }

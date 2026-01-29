@@ -6,12 +6,14 @@ interface NavButtonsProps {
   cardIndex: number
   totalCards: number
   setCardIndex: Dispatch<SetStateAction<number>>
+  setIsVisible: Dispatch<SetStateAction<boolean>>
 }
 
 export function NavButtons({
   cardIndex,
   setCardIndex,
   totalCards,
+  setIsVisible
 }: NavButtonsProps) {
   const handleClick = (variant: string) => {
     if (variant === 'next') {
@@ -23,7 +25,7 @@ export function NavButtons({
   }
 
   return (
-    <div className='mt-5 flex justify-between'>
+    <div className='mt-5 flex justify-between items-center'>
       <Button
         variant='glass'
         disabled={cardIndex === 0}
@@ -31,6 +33,7 @@ export function NavButtons({
       >
         <ChevronLeft />
       </Button>
+      <Button onClick={() => setIsVisible(false)}>Вернуться к выбору тем</Button>
       <Button
         variant='glass'
         disabled={cardIndex === totalCards}

@@ -6,27 +6,32 @@ import { useState } from 'react'
 
 const mock: FlipCardProps[] = [
   {
+    type: '1',
     question:
       'Опишите, что происходит, когда пользователь вводит URL в браузер',
     answer:
       'Проверка кэша DNS-резолв TCP-handshake TLS-handshake (если HTTPS) HTTP-запрос Парсинг HTML Загрузка CSS/JS Рендеринг',
   },
   {
+    type: '2',
     question: 'Что такое event loop и как он работает в JavaScript?',
     answer:
       'Цикл событий обрабатывает call stack и callback queue. Call stack исполняет синхронный код, microtasks (Promise) имеют приоритет перед macrotasks (setTimeout). Один tick: выполнить код → microtasks → один macrotask → повторить.',
   },
   {
+    type: '3',
     question: 'Чем отличаются var, let и const?',
     answer:
       'var — function-scoped, hoisting, можно переобъявлять. let/const — block-scoped, temporal dead zone до объявления. const нельзя переназначить (но объект/массив мутабельны). let допускает переприсваивание.',
   },
   {
+    type: '4',
     question: 'Что такое React Virtual DOM и зачем он нужен?',
     answer:
       'Лёгкая копия реального DOM в памяти. При изменении state React строит новый virtual tree, сравнивает с предыдущим (reconciliation), затем делает минимальный набор изменений в реальном DOM — меньше лишних перерисовок и выше производительность.',
   },
   {
+    type: '5',
     question: 'Объясните разницу между SSR, SSG и CSR',
     answer:
       'SSR — рендер на сервере при каждом запросе, актуальный контент, нагрузка на сервер. SSG — статика при сборке, быстрая отдача, подходит для контента без частых изменений. CSR — рендер в браузере после загрузки JS, хорош для SPA, слабее для SEO без доп. решений.',
@@ -52,6 +57,7 @@ export default function Cards() {
       ) : (
         <div>
           <FlipCard
+            type={mock[cardIndex].type}
             question={mock[cardIndex].question}
             answer={mock[cardIndex].answer}
           />
@@ -59,6 +65,7 @@ export default function Cards() {
             cardIndex={cardIndex}
             setCardIndex={setCardIndex}
             totalCards={mock.length - 1}
+            setIsVisible={setIsVisible}
           />
         </div>
       )}
