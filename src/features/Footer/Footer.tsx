@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { BackButton } from './BackButton'
+import { BackButton } from '../../shared/ui/Button/BackButton'
 
 export function Footer() {
   const pathname = usePathname()

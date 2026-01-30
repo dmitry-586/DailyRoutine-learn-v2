@@ -1,3 +1,3 @@
-export { FlipCard } from './FlipCard'
-export type { FlipCardProps } from './FlipCard'
-export { NavButtons } from './NavButtons'
+export { FlipCard } from './components/FlipCard'
+export { NavButtons } from './components/NavButtons'
+export { useCards } from './useCards'

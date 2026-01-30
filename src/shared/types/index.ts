@@ -1,1 +1,1 @@
-export type { ApiError, ApiResponse } from './api'
+export type { ApiError, ApiResponse, CategoryItem } from './api'
