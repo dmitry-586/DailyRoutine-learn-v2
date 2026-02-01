@@ -42,7 +42,7 @@ export function CategorySelection({
           </div>
           {categories.length > 0 && (
             <Button
-              className='sticky bottom-5 mt-10 ml-auto rounded-xl px-6 py-2.5 text-base'
+              className='sticky bottom-5 mt-10 ml-auto px-6 py-2.5 text-base'
               onClick={onStart}
               disabled={!filteredCategories.length}
             >
