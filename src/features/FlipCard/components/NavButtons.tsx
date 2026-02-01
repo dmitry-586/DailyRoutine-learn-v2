@@ -13,17 +13,12 @@ export function NavButtons({
   setCardIndex,
   totalCards,
 }: NavButtonsProps) {
-  const handleClick = (variant: string) => {
-    if (variant === 'next') {
-      setCardIndex((prev) => prev + 1)
-    }
-    if (variant === 'prev') {
-      setCardIndex((prev) => prev - 1)
-    }
+  const handleClick = (variant: 'next' | 'prev') => {
+    setCardIndex((prev) => prev + (variant === 'next' ? 1 : -1))
   }
 
   return (
-    <div className='mt-5 flex justify-between'>
+    <div className='mt-5 flex w-full max-w-xs items-center justify-between'>
       <Button
         variant='glass'
         disabled={cardIndex === 0}
@@ -31,6 +26,7 @@ export function NavButtons({
       >
         <ChevronLeft />
       </Button>
+
       <Button
         variant='glass'
         disabled={cardIndex === totalCards}

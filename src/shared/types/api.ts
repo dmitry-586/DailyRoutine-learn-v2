@@ -13,3 +13,9 @@ export interface AxiosErrorResponse {
   status?: number
   data?: unknown
 }
+
+export interface CategoryItem {
+  id: string
+  title: string
+  order?: number
+}
