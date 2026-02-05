@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
 import { Button } from '@/shared/ui'
-import { ChevronLeft, ChevronRight, HeartPlus, HeartMinus } from 'lucide-react'
+import { ChevronLeft, ChevronRight, HeartMinus, HeartPlus } from 'lucide-react'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
 
@@ -17,7 +17,7 @@ export function NavButtons({
   totalCards,
 }: NavButtonsProps) {
   const [isLiked, setIsLiked] = useState(false)
-  
+
   const handleClick = (variant: 'next' | 'prev') => {
     setCardIndex((prev) => prev + (variant === 'next' ? 1 : -1))
   }
@@ -36,21 +36,17 @@ export function NavButtons({
         <ChevronLeft />
       </Button>
 
-      <Button variant='glass' className='cursor-default pointer-events-none'>
+      <Button variant='glass' className='pointer-events-none cursor-default'>
         {cardIndex + 1} из {totalCards + 1}
       </Button>
 
-<Button 
-  variant='glass' 
-  onClick={handleLikeClick}
-  className='transition-transform duration-200 hover:scale-110'
->
-  {isLiked ? (
-    <HeartMinus />
-  ) : (
-    <HeartPlus />
-  )}
-</Button>
+      <Button
+        variant='glass'
+        onClick={handleLikeClick}
+        className='transition-transform duration-200 hover:scale-110'
+      >
+        {isLiked ? <HeartMinus /> : <HeartPlus />}
+      </Button>
 
       <Button
         variant='glass'

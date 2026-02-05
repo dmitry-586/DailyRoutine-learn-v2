@@ -1,76 +1,44 @@
 'use client'
 
-import { useState } from 'react'
-import { Button } from '@/shared/ui'
-import RegisterFormFields from './RegisterFormFields'
+import { Input } from '@/shared/ui'
+import { Lock, Mail, User, type LucideIcon } from 'lucide-react'
+
+export interface IFieldsContent {
+  name: string
+  label: string
+  type: 'text' | 'email' | 'password'
+  leftIcon: LucideIcon
+}
+
+export const FieldsContent: IFieldsContent[] = [
+  { name: 'name', label: 'Имя', type: 'text', leftIcon: User },
+  { name: 'email', label: 'Email', type: 'email', leftIcon: Mail },
+  {
+    name: 'password',
+    label: 'Пароль',
+    type: 'password',
+    leftIcon: Lock,
+  },
+  {
+    name: 'confirmPassword',
+    label: 'Подтвердите пароль',
+    type: 'password',
+    leftIcon: Lock,
+  },
+]
 
 export default function RegisterForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  })
-  
-  const [errors, setErrors] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  })
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    const newErrors = {
-      name: formData.name ? '' : 'Введите имя',
-      email: formData.email.includes('@') ? '' : 'Некорректный email',
-      password: formData.password.length >= 6 ? '' : 'Минимум 6 символов',
-      confirmPassword: formData.password === formData.confirmPassword ? '' : 'Пароли не совпадают'
-    }
-    
-    setErrors(newErrors)
-    
-    if (Object.values(newErrors).some(error => error)) {
-      return
-    }
-    
-    try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-      
-      if (res.ok) {
-        alert('Успешная регистрация!')
-      }
-    } catch {
-      alert('Ошибка при регистрации')
-    }
-  }
-
-  const updateField = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-    if (errors[field as keyof typeof errors]) {
-      setErrors(prev => ({ ...prev, [field]: '' }))
-    }
-  }
-
   return (
-    <form onSubmit={handleSubmit}>
-      <RegisterFormFields
-        formData={formData}
-        errors={errors}
-        onChange={updateField}
-      />
-      
-      <Button 
-        type="submit" 
-        className="w-full mt-6"
-      >
-        Зарегистрироваться
-      </Button>
+    <form className='flex w-full flex-col' onSubmit={(e) => e.preventDefault()}>
+      {FieldsContent.map((field) => (
+        <Input
+          key={field.name}
+          name={field.name}
+          type={field.type}
+          label={field.label}
+          leftIcon={field.leftIcon}
+        />
+      ))}
     </form>
   )
 }
