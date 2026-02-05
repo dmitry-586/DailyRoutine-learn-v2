@@ -82,9 +82,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             onClick={() => setShowPassword((v) => !v)}
           >
             {showPassword ? (
-              <EyeOff {...INPUT_ICON} />
-            ) : (
               <Eye {...INPUT_ICON} />
+            ) : (
+              <EyeOff {...INPUT_ICON} />
             )}
           </button>
         ) : (
