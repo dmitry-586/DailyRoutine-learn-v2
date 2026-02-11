@@ -43,7 +43,7 @@ export function FlipCard({ filters }: FlipCardProps) {
         key={cardIndex}
         onClick={handleFlip}
         className={cn(
-          'relative mt-10 flex min-h-100 w-full max-w-xs cursor-pointer justify-center transition-transform duration-500 transform-3d',
+          'relative mt-10 flex min-h-120 w-full max-w-sm cursor-pointer justify-center transition-transform duration-500 transform-3d',
           isFlipped && 'rotate-y-180',
         )}
       >
