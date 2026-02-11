@@ -1,14 +1,16 @@
 import { Lock, LucideIcon, Mail, User } from 'lucide-react'
 
-export interface IFieldsContent {
-  name: string
+export type LoginFieldName = 'name' | 'email' | 'password' | 'confirmPassword'
+
+export interface IFieldContent {
+  name: LoginFieldName
   label: string
   type: 'text' | 'email' | 'password'
   leftIcon: LucideIcon
   isLogin: boolean
 }
 
-export const FieldsContent: IFieldsContent[] = [
+export const FieldsContent: IFieldContent[] = [
   { name: 'name', label: 'Имя', type: 'text', leftIcon: User, isLogin: false },
   {
     name: 'email',

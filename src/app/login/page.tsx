@@ -1,7 +1,6 @@
 'use client'
 
 import { LoginForm } from '@/features/Login'
-import { Button } from '@/shared/ui'
 import { useState } from 'react'
 
 export default function RegisterPage() {
@@ -16,6 +15,7 @@ export default function RegisterPage() {
         <div className='flex gap-2'>
           <p>{isLogin ? 'Нет аккаунта?' : 'Есть аккаунт?'}</p>
           <button
+            type='button'
             onClick={() => {
               setIsLogin((prev) => !prev)
             }}
@@ -25,8 +25,7 @@ export default function RegisterPage() {
           </button>
         </div>
       </div>
-      <LoginForm isLogin={isLogin} />
-      <Button type='submit'>{isLogin ? 'Войти' : 'Зарегистрироваться'}</Button>
+      <LoginForm key={isLogin ? 'login' : 'signup'} isLogin={isLogin} />
     </section>
   )
 }

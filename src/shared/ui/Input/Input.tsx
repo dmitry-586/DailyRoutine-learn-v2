@@ -46,13 +46,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const hasRightSlot = isPassword || RightIcon
 
   return (
-    <div className={cn('relative inline-flex flex-col gap-2 pb-3', wrapperCN)}>
+    <div className={cn('relative inline-flex flex-col gap-2 pb-5', wrapperCN)}>
       {label && (
         <label htmlFor={inputId} className={cn('text-primary', labelCN)}>
           {label}
         </label>
       )}
-      <div className='bg-gray/60 hover:bg-gray/70 flex items-center rounded-2xl border border-white/10 px-4 py-3 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-white/30 active:bg-white/20'>
+      <div className='bg-gray/60 hover:bg-gray/70 flex items-center rounded-2xl border border-white/10 px-4 py-3 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-white/30 active:bg-white/10'>
         {LeftIcon && (
           <LeftIcon
             {...INPUT_ICON}
@@ -97,7 +97,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         )}
       </div>
       {error && (
-        <p className={cn('absolute -bottom-3 text-sm text-red-500', errorCN)}>
+        <p className={cn('absolute bottom-0 text-sm text-red-500', errorCN)}>
           {error}
         </p>
       )}
