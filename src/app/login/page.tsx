@@ -1,6 +1,6 @@
 'use client'
 
-import RegisterForm from '@/features/SignUp/RegisterForm'
+import { LoginForm } from '@/features/Login'
 import { Button } from '@/shared/ui'
 import { useState } from 'react'
 
@@ -25,7 +25,7 @@ export default function RegisterPage() {
           </button>
         </div>
       </div>
-      <RegisterForm />
+      <LoginForm isLogin={isLogin} />
       <Button type='submit'>{isLogin ? 'Войти' : 'Зарегистрироваться'}</Button>
     </section>
   )

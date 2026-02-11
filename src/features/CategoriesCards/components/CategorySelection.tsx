@@ -1,7 +1,7 @@
 import { CategoryItem } from '@/shared/types'
 import { Button } from '@/shared/ui'
-import { CategorySkeleton } from './CategorySkeleton'
 import { Category } from './Category'
+import { CategorySkeleton } from './CategorySkeleton'
 
 interface CategorySelectionProps {
   categories: CategoryItem[]
@@ -42,7 +42,7 @@ export function CategorySelection({
           </div>
           {categories.length > 0 && (
             <Button
-              className='sticky bottom-5 mt-10 ml-auto px-6 py-2.5 text-base'
+              className='hover:bg-primary sticky bottom-5 z-20 mt-10 ml-auto px-6 py-2.5 text-base'
               onClick={onStart}
               disabled={!filteredCategories.length}
             >
