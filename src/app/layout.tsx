@@ -1,5 +1,5 @@
 import { QueryProvider } from '@/shared/lib/query-client'
-import MainLayout from '@/shared/providers/MainLayout'
+import MainLayout from '@/app/providers/MainLayout'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'

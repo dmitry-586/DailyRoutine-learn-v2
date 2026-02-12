@@ -15,7 +15,7 @@ interface LoginFormProps {
   isLogin: boolean
 }
 
-type FormValues = LoginFormValues | SignUpFormValues
+export type FormValues = LoginFormValues | SignUpFormValues
 
 export function LoginForm({ isLogin }: LoginFormProps) {
   const schema = isLogin ? loginSchema : signUpSchema
