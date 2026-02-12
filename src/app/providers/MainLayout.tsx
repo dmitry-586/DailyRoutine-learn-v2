@@ -1,7 +1,7 @@
 import { Header } from '@/features'
 import type { PropsWithChildren } from 'react'
 
-export default function MainLayout({ children }: PropsWithChildren<unknown>) {
+export function MainLayout({ children }: PropsWithChildren<unknown>) {
   return (
     <div className='mx-auto flex h-full min-h-screen w-full max-w-7xl flex-col px-3'>
       <Header />

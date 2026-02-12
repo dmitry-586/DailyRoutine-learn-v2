@@ -8,6 +8,7 @@
   --gray: #3d4348;
   --dark-gray: #252829;
   --muted: #32373a;
+  --toastify-color-dark: #32373a;
 }
 
 @theme inline {
