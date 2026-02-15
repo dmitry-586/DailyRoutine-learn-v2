@@ -2,9 +2,8 @@
 
 import { Button, Input } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useQueryClient } from '@tanstack/react-query'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 import { FieldsContent } from './config'
 import {
   loginSchema,
@@ -20,39 +19,53 @@ interface LoginFormProps {
 
 export type FormValues = LoginFormValues | SignUpFormValues
 
+const isAllowedRedirect = (path: string | null): path is string =>
+  !!path &&
+  path.startsWith('/') &&
+  !path.startsWith('//') &&
+  !path.startsWith('/login')
+
 export function LoginForm({ isLogin }: LoginFormProps) {
   const schema = isLogin ? loginSchema : signUpSchema
-
-  const queryClient = useQueryClient()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const from = searchParams.get('from')
 
   const { reset, handleSubmit, register, formState } = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   })
 
-  const { loginMutation, registerMutation } = useAuth()
+  const { loginMutation, registerMutation, isPending } = useAuth()
+
+  const onSuccess = () => {
+    reset()
+    router.push(isAllowedRedirect(from) ? from : '/')
+  }
 
   const onSubmit = handleSubmit((data) => {
     if (isLogin) {
-      loginMutation(data as LoginFormValues, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['user'] })
-          toast.success('Вход успешен!')
-        },
+      loginMutation.mutate(data as LoginFormValues, {
+        onSuccess: onSuccess,
       })
     } else {
-      registerMutation(data as SignUpFormValues, {
-        onSuccess: () => {
-          toast.success('Регистрация успешна!')
-        },
+      registerMutation.mutate(data as SignUpFormValues, {
+        onSuccess: onSuccess,
       })
     }
-    reset()
   })
 
   const visibleFields = isLogin
     ? FieldsContent.filter((f) => f.isLogin)
     : FieldsContent
+
+  const submitButtonText = isPending
+    ? isLogin
+      ? 'Вход...'
+      : 'Регистрация...'
+    : isLogin
+      ? 'Войти'
+      : 'Зарегистрироваться'
 
   return (
     <form className='flex w-full flex-col' onSubmit={onSubmit}>
@@ -65,10 +78,11 @@ export function LoginForm({ isLogin }: LoginFormProps) {
           label={field.label}
           leftIcon={field.leftIcon}
           error={formState.errors[field.name as keyof FormValues]?.message}
+          disabled={isPending}
         />
       ))}
-      <Button className='mt-4' type='submit'>
-        {isLogin ? 'Войти' : 'Зарегистрироваться'}
+      <Button className='mt-4' type='submit' disabled={isPending}>
+        {submitButtonText}
       </Button>
     </form>
   )

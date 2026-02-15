@@ -1,6 +1,6 @@
 'use client'
 
-import { shouldRetry } from '@/shared/lib/query-client'
+import { shouldRetry } from '@/shared/lib'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ReactNode, useState } from 'react'

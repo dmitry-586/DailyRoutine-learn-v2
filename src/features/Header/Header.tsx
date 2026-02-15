@@ -1,37 +1,22 @@
 'use client'
 
-import { api } from '@/shared/lib'
-import { useQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
-import { AuthButton } from './AuthButton'
-import { BurgerButton } from './BurgerButton'
-
-interface IUser {
-  id: string
-  email: string
-  role: string
-}
-
-type IQuery = {
-  user: IUser
-}
+import { AuthButton } from './components/AuthButton'
+import { BurgerButton } from './components/BurgerButton'
+import { useCurrentUser } from './hooks'
 
 export function Header() {
   const pathname = usePathname()
-
-  const user = useQuery({
-    queryKey: ['user'],
-    queryFn: async () => {
-      const data = await api.get<IQuery>('/auth/me')
-      return data.data.user
-    },
-  })
+  const { user, isLoading } = useCurrentUser()
+  const displayEmail = isLoading
+    ? 'Загрузка...'
+    : user?.email || 'Не авторизован'
 
   return (
     <header className='sticky top-0 z-10 flex items-center justify-between pt-5'>
       {pathname === '/theory' && <BurgerButton />}
       <div className='ml-auto flex items-center gap-2'>
-        <p>{user.data?.email || 'unknown'}</p>
+        <p>{displayEmail}</p>
         <AuthButton />
       </div>
     </header>
