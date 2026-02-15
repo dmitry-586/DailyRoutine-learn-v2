@@ -7,18 +7,49 @@ export const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 })
+
+let refreshPromise: Promise<unknown> | null = null
 
 apiClient.interceptors.response.use(
   (response) => response,
-  (error: AxiosError<{ message?: string; error?: string }>) => {
+  async (error: AxiosError<{ message?: string; error?: string }>) => {
+    const originalRequest = error.config as AxiosRequestConfig & {
+      _retry?: boolean
+    }
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes('/auth/refresh')
+    ) {
+      originalRequest._retry = true
+
+      if (!refreshPromise) {
+        refreshPromise = apiClient
+          .post('/auth/refresh')
+          .catch((refreshError) => {
+            refreshPromise = null
+            throw refreshError
+          })
+      }
+
+      try {
+        await refreshPromise
+        return apiClient(originalRequest)
+      } catch (refreshError) {
+        refreshPromise = null
+        return Promise.reject(error)
+      }
+    }
+
     const apiError: ApiError = {
       message: 'Произошла ошибка при выполнении запроса',
       status: error.response?.status,
       code: error.code,
     }
 
-    // Извлекаем сообщение об ошибке из ответа
     if (error.response?.data) {
       const errorData = error.response.data
       if (typeof errorData === 'object') {
@@ -35,7 +66,6 @@ apiClient.interceptors.response.use(
   },
 )
 
-// Типизированные методы для удобства использования
 export const api = {
   get: <T = unknown>(
     url: string,

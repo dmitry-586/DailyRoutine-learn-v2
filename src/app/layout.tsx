@@ -1,8 +1,8 @@
-import { QueryProvider } from '@/shared/lib/query-client'
-import MainLayout from '@/shared/providers/MainLayout'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ToastContainer } from 'react-toastify'
 import './globals.css'
+import { MainLayout, QueryProvider } from './providers'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -21,12 +21,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ru'>
-      <body
-        className={`${inter.variable} custom-scrollbar antialiased`}
-      >
-        <MainLayout>
-          <QueryProvider>{children}</QueryProvider>
-        </MainLayout>
+      <body className={`${inter.variable} custom-scrollbar antialiased`}>
+        <QueryProvider>
+          <MainLayout>
+            <ToastContainer
+              position='top-center'
+              autoClose={3000}
+              pauseOnHover
+              theme='dark'
+            />
+            {children}
+          </MainLayout>
+        </QueryProvider>
       </body>
     </html>
   )
