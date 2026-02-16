@@ -1,9 +1,9 @@
 'use client'
 
+import { useCurrentUser } from '@/services/hooks'
 import { usePathname } from 'next/navigation'
 import { AuthButton } from './components/AuthButton'
 import { BurgerButton } from './components/BurgerButton'
-import { useCurrentUser } from './hooks'
 
 export function Header() {
   const pathname = usePathname()

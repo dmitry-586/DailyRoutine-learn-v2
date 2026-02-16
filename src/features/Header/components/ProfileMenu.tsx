@@ -1,8 +1,9 @@
 import { useAuth } from '@/features/Login'
+import { useCurrentUser } from '@/services/hooks'
 import { cn } from '@/shared/lib'
+import { CloseButton } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useCurrentUser } from '../hooks'
 import { navMenu } from './config'
 
 export function ProfileMenu() {
@@ -21,16 +22,14 @@ export function ProfileMenu() {
       <nav className='flex flex-col gap-3 px-4 py-2 text-sm'>
         {filteredMenu.map((el) => {
           return (
-            <Link
-              className='hover:text-primary transition-colors duration-200'
-              key={el.id}
-              href={el.href}
-            >
-              {el.title}
+            <Link key={el.id} href={el.href}>
+              <CloseButton className='hover:text-primary cursor-pointer transition-colors duration-200'>
+                {el.title}
+              </CloseButton>
             </Link>
           )
         })}
-        <button
+        <CloseButton
           onClick={
             isAuthenticated
               ? () => logoutMutation.mutate(undefined)
@@ -38,8 +37,10 @@ export function ProfileMenu() {
           }
           disabled={logoutMutation.isPending}
           className={cn(
-            'cursor-pointer border-white/60 transition-opacity',
-            isAuthenticated ? 'border-t pt-2 text-red-500' : 'text-primary',
+            'cursor-pointer border-white/60 transition-all duration-200',
+            isAuthenticated
+              ? 'border-t pt-2 text-red-500/90 hover:text-red-600'
+              : 'text-primary hover:text-primary/80',
             logoutMutation.isPending && 'cursor-not-allowed opacity-50',
           )}
         >
@@ -48,7 +49,7 @@ export function ProfileMenu() {
             : isAuthenticated
               ? 'Выйти'
               : 'Войти'}
-        </button>
+        </CloseButton>
       </nav>
     </nav>
   )

@@ -1,6 +1,6 @@
+import { fetchCurrentUser } from '@/features'
 import { queryKeys } from '@/shared/lib'
 import { useQuery } from '@tanstack/react-query'
-import { fetchCurrentUser } from './queries'
 
 export function useCurrentUser() {
   const {

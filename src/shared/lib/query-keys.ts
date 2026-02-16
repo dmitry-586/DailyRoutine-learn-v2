@@ -1,3 +1,4 @@
 export const queryKeys = {
-  user: ['user'] as const,
+  user: ['user'],
+  part: ['part'],
 } as const

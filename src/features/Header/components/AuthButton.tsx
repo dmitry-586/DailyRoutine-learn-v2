@@ -9,7 +9,11 @@ export function AuthButton() {
       <PopoverButton as={Button} variant='glass' className='focus:outline-none'>
         <Image src='/user.svg' alt='user' width={26} height={26} />
       </PopoverButton>
-      <PopoverPanel anchor='bottom end' className='mt-2'>
+      <PopoverPanel
+        transition
+        anchor='bottom end'
+        className='mt-2 transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0'
+      >
         <ProfileMenu />
       </PopoverPanel>
     </Popover>
