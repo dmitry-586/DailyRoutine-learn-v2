@@ -1,4 +1,5 @@
 import { api } from '@/shared/lib'
+import { ChapterWithSubchapters } from './hooks/useChapterById'
 import type { AuthMeResponse, Part, User } from './types'
 
 const fetchCurrentUser = async (): Promise<User | null> => {
@@ -16,4 +17,12 @@ const fetchAllParts = async (): Promise<Part[]> => {
   return Array.isArray(data) ? data : []
 }
 
-export { fetchAllParts, fetchCurrentUser }
+const fetchChapterById = async (
+  id: string,
+): Promise<ChapterWithSubchapters> => {
+  const { data } = await api.get<ChapterWithSubchapters>(`/chapter/${id}`)
+
+  return data
+}
+
+export { fetchAllParts, fetchChapterById, fetchCurrentUser }

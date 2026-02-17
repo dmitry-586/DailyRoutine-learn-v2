@@ -3,13 +3,13 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchAllParts } from '../queries'
 import { Part } from '../types'
 
-interface UsePartsResult {
+interface PartsResult {
   parts: Part[]
   isLoading: boolean
   isEmpty: boolean
 }
 
-export function useParts(): UsePartsResult {
+export function useParts(): PartsResult {
   const {
     data: parts,
     isLoading,

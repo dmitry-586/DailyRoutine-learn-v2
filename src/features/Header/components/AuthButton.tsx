@@ -5,7 +5,7 @@ import { ProfileMenu } from './ProfileMenu'
 
 export function AuthButton() {
   return (
-    <Popover className='relative'>
+    <Popover>
       <PopoverButton as={Button} variant='glass' className='focus:outline-none'>
         <Image src='/user.svg' alt='user' width={26} height={26} />
       </PopoverButton>

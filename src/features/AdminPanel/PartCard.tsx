@@ -1,6 +1,6 @@
 import { Part } from '@/services'
 import { Button, Input } from '@/shared/ui'
-import { ChaptersCard } from './ChaptersCard'
+import { ChapterCard } from './ChapterCard'
 
 export function PartCard({ chapters, title, order }: Part) {
   return (
@@ -15,12 +15,13 @@ export function PartCard({ chapters, title, order }: Part) {
         <Input defaultValue={title} wrapperCN='w-full' label='Название части' />
       </div>
       <div className='mt-3 flex flex-col border-t border-white/40 pt-5'>
-        {chapters.map((el) => (
-          <ChaptersCard
+        {chapters.map((el, index) => (
+          <ChapterCard
             key={el.id}
             id={el.id}
             order={el.order}
             title={el.title}
+            isFirst={index === 0}
           />
         ))}
       </div>

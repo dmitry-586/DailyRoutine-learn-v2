@@ -4,6 +4,11 @@ interface Chapter {
   order: number
 }
 
+interface Subchapter extends Chapter {
+  chapterId: string
+  description: string
+}
+
 interface Part extends Chapter {
   chapters: Chapter[]
 }
@@ -18,4 +23,4 @@ interface AuthMeResponse {
   user: User
 }
 
-export type { AuthMeResponse, Chapter, Part, User }
+export type { AuthMeResponse, Chapter, Part, Subchapter, User }

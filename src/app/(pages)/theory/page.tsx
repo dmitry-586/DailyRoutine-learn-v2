@@ -1,7 +1,14 @@
+import { BurgerButton } from '@/features/Header/components/BurgerButton'
+import { BackButton } from '@/shared/ui'
+
 export default function Theory() {
   return (
     <>
-      <h2>Theory page</h2>
+      <div className='flex flex-1'>Theory page</div>
+      <div className='sticky bottom-5 left-0 z-10 flex gap-5'>
+        <BackButton />
+        <BurgerButton />
+      </div>
     </>
   )
 }

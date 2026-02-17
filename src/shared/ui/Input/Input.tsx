@@ -63,7 +63,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           id={inputId}
           type={isPassword ? (showPassword ? 'text' : 'password') : type}
           className={cn(
-            'min-w-0 flex-1 px-3 py-3 outline-none disabled:pointer-events-none disabled:opacity-50',
+            'min-w-0 flex-1 p-3 outline-none disabled:pointer-events-none disabled:opacity-50',
             inputCN,
             className,
           )}
