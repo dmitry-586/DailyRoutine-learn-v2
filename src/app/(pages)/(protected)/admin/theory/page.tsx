@@ -2,22 +2,21 @@
 
 import { PartCard } from '@/features/AdminPanel'
 import { useParts } from '@/services/hooks'
-import { BackButton } from '@/shared/ui'
+import { Button, HomeButton } from '@/shared/ui'
+import { Loader2 } from 'lucide-react'
 
-export default function AdminPage() {
+export default function TheoryAdmin() {
   const { parts, isLoading, isEmpty } = useParts()
 
   return (
     <section className='flex h-full flex-1 flex-col'>
-      <h2 className='text-center text-xl'>Админ панель</h2>
-
       <div className='mt-5 flex flex-1 flex-col'>
         {isLoading && (
-          <p className='text-muted-foreground text-sm'>Загрузка разделов...</p>
+          <Loader2 className='text-primary mx-auto mt-10 animate-spin' />
         )}
 
         {!isLoading && isEmpty && (
-          <p className='text-muted-foreground text-sm'>Разделы не найдены</p>
+          <p className='text-primary mx-auto text-sm'>Разделы не найдены</p>
         )}
 
         {!isLoading && !isEmpty && (
@@ -35,8 +34,9 @@ export default function AdminPage() {
         )}
       </div>
 
-      <div className='sticky bottom-5 left-0 z-10 w-fit'>
-        <BackButton />
+      <div className='sticky bottom-5 left-0 z-10 flex gap-5'>
+        <HomeButton />
+        <Button variant='default'>Добавить часть</Button>
       </div>
     </section>
   )

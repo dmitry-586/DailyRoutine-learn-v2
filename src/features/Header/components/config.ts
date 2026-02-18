@@ -15,7 +15,7 @@ const navMenu: NavMenu[] = [
   {
     id: '2',
     title: 'Админка',
-    href: '/admin',
+    href: '/admin/theory',
     isAdmin: true,
   },
 ]

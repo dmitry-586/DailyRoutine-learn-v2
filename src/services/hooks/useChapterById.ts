@@ -13,7 +13,10 @@ interface ChapterByIdResult {
   isLoading: boolean
 }
 
-export function useChapterById(id: string): ChapterByIdResult {
+export function useChapterById(
+  id: string,
+  enabled: boolean,
+): ChapterByIdResult {
   const {
     data: chapter,
     isLoading,
@@ -21,6 +24,7 @@ export function useChapterById(id: string): ChapterByIdResult {
   } = useQuery({
     queryKey: queryKeys.chapter(id),
     queryFn: () => fetchChapterById(id),
+    enabled,
   })
 
   const isPending = isLoading || (isFetching && !chapter)

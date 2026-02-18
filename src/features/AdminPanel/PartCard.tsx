@@ -5,14 +5,19 @@ import { ChapterCard } from './ChapterCard'
 export function PartCard({ chapters, title, order }: Part) {
   return (
     <div className='bg-gray/40 hover:border-primary/50 hover:bg-gray/60 flex flex-col rounded-2xl border border-white/10 px-4 py-6 shadow-sm transition-all duration-300 hover:shadow-lg'>
-      <div className='flex gap-5'>
+      <div className='flex items-end gap-5'>
         <Input
           defaultValue={order}
           wrapperCN='w-26'
-          inputCN='text-center'
+          inputCN='text-center text-sm text-primary py-2'
           label='Номер части'
         />
-        <Input defaultValue={title} wrapperCN='w-full' label='Название части' />
+        <Input
+          defaultValue={title}
+          inputCN='text-sm py-2'
+          wrapperCN='w-full'
+          label='Название части'
+        />
       </div>
       <div className='mt-3 flex flex-col border-t border-white/40 pt-5'>
         {chapters.map((el, index) => (
@@ -29,7 +34,10 @@ export function PartCard({ chapters, title, order }: Part) {
         <Button className='border-red-500/80 text-red-500/80 hover:bg-red-500/10 active:bg-red-500/20'>
           Удалить всю часть
         </Button>
-        <Button>Сохранить</Button>
+        <div className='flex gap-5'>
+          <Button className='w-fit'>Добавить главу</Button>
+          <Button variant='default'>Сохранить</Button>
+        </div>
       </div>
     </div>
   )

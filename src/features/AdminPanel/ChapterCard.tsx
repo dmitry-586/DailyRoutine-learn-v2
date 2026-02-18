@@ -1,3 +1,5 @@
+'use client'
+
 import { Chapter } from '@/services'
 import { Button, Input } from '@/shared/ui'
 import { useState } from 'react'
@@ -17,15 +19,16 @@ export function ChapterCard({ order, title, id, isFirst }: ChapterCardProps) {
       <Input
         defaultValue={order}
         wrapperCN='w-26'
-        inputCN='text-center'
+        inputCN='text-center text-sm py-2'
         label={isFirst ? 'Номер главы' : ''}
       />
       <Input
         defaultValue={title}
         wrapperCN='w-full'
+        inputCN='text-sm py-2'
         label={isFirst ? 'Название главы' : ''}
       />
-      <Button onClick={() => setIsOpen(true)} className='mb-5 py-3'>
+      <Button onClick={() => setIsOpen(true)} className='mb-5 py-2'>
         Открыть
       </Button>
       <ChapterDialog id={id} isOpen={isOpen} handleClose={handleClose} />
