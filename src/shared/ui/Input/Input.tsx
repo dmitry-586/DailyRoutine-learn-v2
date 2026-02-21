@@ -17,6 +17,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   rightIconCN?: string
   label?: string
   error?: string
+  customSize?: 'sm' | 'md'
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -47,7 +48,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   return (
     <div className={cn('relative inline-flex flex-col gap-2 pb-5', wrapperCN)}>
       {label && (
-        <label htmlFor={inputId} className={cn('text-primary', labelCN)}>
+        <label htmlFor={inputId} className={cn('text-primary text-sm', labelCN)}>
           {label}
         </label>
       )}
@@ -63,7 +64,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           id={inputId}
           type={isPassword ? (showPassword ? 'text' : 'password') : type}
           className={cn(
-            'min-w-0 flex-1 p-3 outline-none disabled:pointer-events-none disabled:opacity-50',
+            'min-w-0 flex-1 px-3 py-2 text-sm outline-none disabled:pointer-events-none disabled:opacity-50',
             inputCN,
             className,
           )}
@@ -94,7 +95,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         )}
       </div>
       {error && (
-        <p className={cn('absolute bottom-0 text-sm text-red-500', errorCN)}>
+        <p className={cn('absolute bottom-0 text-xs text-red-500', errorCN)}>
           {error}
         </p>
       )}

@@ -9,6 +9,11 @@ interface Subchapter extends Chapter {
   description: string
 }
 
+interface ChapterWithSubchapters extends Chapter {
+  partId: string
+  subchapters: Subchapter[]
+}
+
 interface Part extends Chapter {
   chapters: Chapter[]
 }
@@ -23,4 +28,11 @@ interface AuthMeResponse {
   user: User
 }
 
-export type { AuthMeResponse, Chapter, Part, Subchapter, User }
+export type {
+  AuthMeResponse,
+  Chapter,
+  ChapterWithSubchapters,
+  Part,
+  Subchapter,
+  User,
+}

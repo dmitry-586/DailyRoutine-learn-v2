@@ -1,11 +1,12 @@
 'use client'
 
-import { PartCard } from '@/features/AdminPanel'
-import { useParts } from '@/services/hooks'
+import { AddPartModal, PartCard, useParts } from '@/features/AdminPanel'
 import { Button, HomeButton } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 
 export default function TheoryAdmin() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { parts, isLoading, isEmpty } = useParts()
 
   return (
@@ -36,8 +37,16 @@ export default function TheoryAdmin() {
 
       <div className='sticky bottom-5 left-0 z-10 flex gap-5'>
         <HomeButton />
-        <Button variant='default'>Добавить часть</Button>
+        <Button onClick={() => setIsModalOpen(true)} variant='default'>
+          Добавить часть
+        </Button>
       </div>
+
+      <AddPartModal
+        isOpen={isModalOpen}
+        partsCount={parts.length}
+        handleClose={() => setIsModalOpen(false)}
+      />
     </section>
   )
 }

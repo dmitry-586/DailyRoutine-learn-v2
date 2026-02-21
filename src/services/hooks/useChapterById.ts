@@ -1,16 +1,18 @@
-import { queryKeys } from '@/shared/lib'
+import { api, queryKeys } from '@/shared/lib'
 import { useQuery } from '@tanstack/react-query'
-import { fetchChapterById } from '../queries'
-import { Chapter, Subchapter } from '../types'
-
-export interface ChapterWithSubchapters extends Chapter {
-  partId: string
-  subchapters: Subchapter[]
-}
+import { ChapterWithSubchapters } from '../types'
 
 interface ChapterByIdResult {
   chapter?: ChapterWithSubchapters
   isLoading: boolean
+}
+
+const fetchChapterById = async (
+  id: string,
+): Promise<ChapterWithSubchapters> => {
+  const { data } = await api.get<ChapterWithSubchapters>(`/chapter/${id}`)
+
+  return data
 }
 
 export function useChapterById(
@@ -22,7 +24,7 @@ export function useChapterById(
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: queryKeys.chapter(id),
+    queryKey: queryKeys.chapter.byId(id),
     queryFn: () => fetchChapterById(id),
     enabled,
   })

@@ -1,8 +1,11 @@
 import { Part } from '@/services'
 import { Button, Input } from '@/shared/ui'
-import { ChapterCard } from './ChapterCard'
+import { useDeletePart } from './queries'
+import { ChapterCard } from '../Chapters'
 
-export function PartCard({ chapters, title, order }: Part) {
+export function PartCard({ chapters, title, order, id }: Part) {
+  const partDelete = useDeletePart()
+
   return (
     <div className='bg-gray/40 hover:border-primary/50 hover:bg-gray/60 flex flex-col rounded-2xl border border-white/10 px-4 py-6 shadow-sm transition-all duration-300 hover:shadow-lg'>
       <div className='flex items-end gap-5'>
@@ -31,7 +34,10 @@ export function PartCard({ chapters, title, order }: Part) {
         ))}
       </div>
       <div className='mt-3 flex justify-between'>
-        <Button className='border-red-500/80 text-red-500/80 hover:bg-red-500/10 active:bg-red-500/20'>
+        <Button
+          onClick={() => partDelete.mutate(id)}
+          className='border-red-500/80 text-red-500/80 hover:bg-red-500/10 active:bg-red-500/20'
+        >
           Удалить всю часть
         </Button>
         <div className='flex gap-5'>

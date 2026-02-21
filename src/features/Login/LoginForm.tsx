@@ -28,8 +28,7 @@ const isAllowedRedirect = (path: string | null): path is string =>
 export function LoginForm({ isLogin }: LoginFormProps) {
   const schema = isLogin ? loginSchema : signUpSchema
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const from = searchParams.get('from')
+  const from = useSearchParams().get('from')
 
   const { reset, handleSubmit, register, formState } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -79,6 +78,7 @@ export function LoginForm({ isLogin }: LoginFormProps) {
           leftIcon={field.leftIcon}
           error={formState.errors[field.name as keyof FormValues]?.message}
           disabled={isPending}
+          className='py-3'
         />
       ))}
       <Button className='mt-4' type='submit' disabled={isPending}>

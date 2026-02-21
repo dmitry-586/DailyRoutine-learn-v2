@@ -45,7 +45,7 @@ export function NavAdmin() {
             key={el.id}
             href={el.href}
             className={cn(
-              'bg-gray/40 hover:border-primary/50 hover:bg-gray/60 flex items-center gap-2 rounded-2xl border border-white/10 px-4 py-2 shadow-sm transition-all duration-300 hover:shadow-lg',
+              'bg-gray/40 hover:border-primary/50 hover:bg-gray/60 flex items-center gap-2 rounded-2xl border border-white/10 px-4 py-2 text-sm shadow-sm transition-all duration-300 hover:shadow-lg',
               pathname === el.href &&
                 'border-primary/50 bg-primary/20 hover:bg-primary/30 transition-colors duration-200',
             )}
