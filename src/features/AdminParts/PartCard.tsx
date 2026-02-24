@@ -1,31 +1,40 @@
-import { Part } from '@/services'
-import { Button, Input } from '@/shared/ui'
-import { useDeletePart } from './queries'
-import { ChapterCard } from '../Chapters'
+'use client'
 
-export function PartCard({ chapters, title, order, id }: Part) {
+import { Part } from '@/services'
+import { Button } from '@/shared/ui'
+import { useState } from 'react'
+import { AddChapterModal, ChapterCard } from './Chapters'
+import { EntityInputs } from './components/EntityInputs'
+import { useDeletePart } from './queries'
+
+interface PartCardProps extends Part {
+  chaptersCount: number
+}
+
+export function PartCard({
+  chapters,
+  title,
+  order,
+  id,
+  chaptersCount,
+}: PartCardProps) {
+  const [isOpen, setIsOpen] = useState(false)
+
   const partDelete = useDeletePart()
 
   return (
     <div className='bg-gray/40 hover:border-primary/50 hover:bg-gray/60 flex flex-col rounded-2xl border border-white/10 px-4 py-6 shadow-sm transition-all duration-300 hover:shadow-lg'>
-      <div className='flex items-end gap-5'>
-        <Input
-          defaultValue={order}
-          wrapperCN='w-26'
-          inputCN='text-center text-sm text-primary py-2'
-          label='Номер части'
-        />
-        <Input
-          defaultValue={title}
-          inputCN='text-sm py-2'
-          wrapperCN='w-full'
-          label='Название части'
-        />
-      </div>
+      <EntityInputs
+        order={order}
+        title={title}
+        orderLabel='Номер части'
+        titleLabel='Название части'
+        orderInputCN='text-primary'
+      />
       <div className='mt-3 flex flex-col border-t border-white/40 pt-5'>
         {chapters.map((el, index) => (
           <ChapterCard
-            key={el.id}
+            key={`${el.id}-${el.order}`}
             id={el.id}
             order={el.order}
             title={el.title}
@@ -41,10 +50,20 @@ export function PartCard({ chapters, title, order, id }: Part) {
           Удалить всю часть
         </Button>
         <div className='flex gap-5'>
-          <Button className='w-fit'>Добавить главу</Button>
+          <Button className='w-fit' onClick={() => setIsOpen(true)}>
+            Добавить главу
+          </Button>
           <Button variant='default'>Сохранить</Button>
         </div>
       </div>
+
+      <AddChapterModal
+        partId={id}
+        isOpen={isOpen}
+        minOrder={chaptersCount + 1}
+        maxOrder={chaptersCount + chapters.length + 1}
+        handleClose={() => setIsOpen(false)}
+      />
     </div>
   )
 }

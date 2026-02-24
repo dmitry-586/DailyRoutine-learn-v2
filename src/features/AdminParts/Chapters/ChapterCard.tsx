@@ -1,9 +1,10 @@
 'use client'
 
 import { Chapter } from '@/services'
-import { Button, Input } from '@/shared/ui'
+import { Button } from '@/shared/ui'
 import { useState } from 'react'
-import { ChapterDialog } from './ChapterDialog'
+import { EntityInputs } from '../components/EntityInputs'
+import { ChapterModal } from './ChapterModal'
 
 interface ChapterCardProps extends Chapter {
   isFirst: boolean
@@ -16,22 +17,16 @@ export function ChapterCard({ order, title, id, isFirst }: ChapterCardProps) {
 
   return (
     <div className='flex items-end gap-5'>
-      <Input
-        defaultValue={order}
-        wrapperCN='w-26'
-        inputCN='text-center text-sm py-2'
-        label={isFirst ? 'Номер главы' : ''}
-      />
-      <Input
-        defaultValue={title}
-        wrapperCN='w-full'
-        inputCN='text-sm py-2'
-        label={isFirst ? 'Название главы' : ''}
+      <EntityInputs
+        order={order}
+        title={title}
+        orderLabel={isFirst ? 'Номер главы' : ''}
+        titleLabel={isFirst ? 'Название главы' : ''}
       />
       <Button onClick={() => setIsOpen(true)} className='mb-5 py-2'>
         Открыть
       </Button>
-      <ChapterDialog id={id} isOpen={isOpen} handleClose={handleClose} />
+      <ChapterModal id={id} isOpen={isOpen} handleClose={handleClose} />
     </div>
   )
 }

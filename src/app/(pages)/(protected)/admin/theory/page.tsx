@@ -1,6 +1,7 @@
 'use client'
 
-import { AddPartModal, PartCard, useParts } from '@/features/AdminPanel'
+import { AddPartModal, PartCard, useParts } from '@/features/AdminParts'
+import { Part } from '@/services'
 import { Button, HomeButton } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
@@ -8,6 +9,19 @@ import { useState } from 'react'
 export default function TheoryAdmin() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { parts, isLoading, isEmpty } = useParts()
+
+  const partsWithChaptersCount = parts.reduce(
+    (acc: { part: Part; chaptersCount: number }[], part, index) => {
+      const previousTotal =
+        index === 0
+          ? 0
+          : acc[index - 1].chaptersCount + parts[index - 1].chapters.length
+
+      acc.push({ part, chaptersCount: previousTotal })
+      return acc
+    },
+    [],
+  )
 
   return (
     <section className='flex h-full flex-1 flex-col'>
@@ -22,13 +36,14 @@ export default function TheoryAdmin() {
 
         {!isLoading && !isEmpty && (
           <ul className='mx-auto flex w-full max-w-3xl flex-col gap-8'>
-            {parts.map((part) => (
+            {partsWithChaptersCount.map(({ part, chaptersCount }) => (
               <PartCard
-                key={part.id}
+                key={`${part.id}-${part.order}`}
                 id={part.id}
                 chapters={part.chapters}
                 order={part.order}
                 title={part.title}
+                chaptersCount={chaptersCount}
               />
             ))}
           </ul>

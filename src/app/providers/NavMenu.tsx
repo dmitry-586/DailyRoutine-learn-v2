@@ -33,7 +33,7 @@ const AdminLinks: AdminLinksProps[] = [
   },
 ]
 
-export function NavAdmin() {
+export function NavMenu() {
   const pathname = usePathname()
 
   return (
