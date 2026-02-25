@@ -1,3 +1,3 @@
 export { MainLayout } from './MainLayout'
-export { NavMenu } from './NavMenu'
+export { NavAdmin } from './NavAdmin'
 export { QueryProvider } from './QueryProvider'

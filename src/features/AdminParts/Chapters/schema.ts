@@ -1,5 +1,5 @@
 import z from 'zod'
-import { baseOrderSchema } from '../helpers/schema'
+import { baseOrderSchema } from '../schema'
 
 export const createChapterSchema = (minOrder: number, maxOrder: number) =>
   z.object({
@@ -15,4 +15,10 @@ export const createChapterSchema = (minOrder: number, maxOrder: number) =>
 
 export const chapterSchema = createChapterSchema(1, Number.MAX_SAFE_INTEGER)
 
+export const subchapterSchema = z.object({
+  title: z.string().min(6, 'Минимум 6 символов'),
+  description: z.string().min(10, 'Минимум 10 символов'),
+})
+
 export type ChapterFormValues = z.infer<typeof chapterSchema>
+export type SubchapterFormValues = z.infer<typeof subchapterSchema>

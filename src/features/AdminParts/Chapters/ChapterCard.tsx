@@ -3,7 +3,7 @@
 import { Chapter } from '@/services'
 import { Button } from '@/shared/ui'
 import { useState } from 'react'
-import { EntityInputs } from '../components/EntityInputs'
+import { EntityInputs } from '../ui'
 import { ChapterModal } from './ChapterModal'
 
 interface ChapterCardProps extends Chapter {
@@ -18,6 +18,7 @@ export function ChapterCard({ order, title, id, isFirst }: ChapterCardProps) {
   return (
     <div className='flex items-end gap-5'>
       <EntityInputs
+        key={`${id}-${order}`}
         order={order}
         title={title}
         orderLabel={isFirst ? 'Номер главы' : ''}

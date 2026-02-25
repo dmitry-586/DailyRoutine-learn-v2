@@ -79,11 +79,9 @@ function useChapterMutation() {
   return useMutation({
     mutationFn: chapterApi.create,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.part })
       queryClient.invalidateQueries({
         queryKey: queryKeys.chapter.all,
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.part,
       })
       toast.success('Новая глава создана')
     },
@@ -97,11 +95,9 @@ function useDeleteChapter() {
   return useMutation({
     mutationFn: chapterApi.delete,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.part })
       queryClient.invalidateQueries({
         queryKey: queryKeys.chapter.all,
-      })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.part,
       })
       toast.success('Глава удалена')
     },
