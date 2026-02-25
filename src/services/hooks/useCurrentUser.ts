@@ -1,6 +1,15 @@
-import { queryKeys } from '@/shared/lib'
+import { api, queryKeys } from '@/shared/lib'
 import { useQuery } from '@tanstack/react-query'
-import { fetchCurrentUser } from './queries'
+import { AuthMeResponse, User } from '../types'
+
+const fetchCurrentUser = async (): Promise<User | null> => {
+  try {
+    const { data } = await api.get<AuthMeResponse>('/auth/me')
+    return data.user
+  } catch {
+    return null
+  }
+}
 
 export function useCurrentUser() {
   const {

@@ -1,15 +1,15 @@
 'use client'
 
-import { useCurrentUser } from '@/features/Header'
+import { useCurrentUser } from '@/services/hooks'
 import { usePathname } from 'next/navigation'
-import { useEffect, type ReactNode } from 'react'
+import { useLayoutEffect, type ReactNode } from 'react'
 
 export default function ProtectedLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const { isAuthenticated, isAdmin, isLoading } = useCurrentUser()
   const requireAdmin = pathname.startsWith('/admin')
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isLoading) return
     if (!isAuthenticated) {
       window.location.href = `/login?from=${encodeURIComponent(pathname)}`
