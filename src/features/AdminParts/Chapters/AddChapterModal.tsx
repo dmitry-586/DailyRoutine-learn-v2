@@ -1,7 +1,7 @@
+import { useCreateChapter } from '@/services/theory'
 import { Button, Input } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useChapterMutation } from '../queries'
 import { BaseModal } from '../ui'
 import { ChapterFormValues, createChapterSchema } from './schema'
 
@@ -20,7 +20,7 @@ export function AddChapterModal({
   maxOrder,
   handleClose,
 }: ChapterModalProps) {
-  const chapterMutation = useChapterMutation()
+  const createChapter = useCreateChapter()
 
   const {
     reset,
@@ -33,7 +33,7 @@ export function AddChapterModal({
   })
 
   const onSubmit = handleSubmit((data) => {
-    chapterMutation.mutate(
+    createChapter.mutate(
       { ...data, partId },
       {
         onSuccess: () => {
@@ -56,7 +56,7 @@ export function AddChapterModal({
           label='Название главы'
           placeholder='Введите название'
           wrapperCN='w-full'
-          disabled={chapterMutation.isPending}
+          disabled={createChapter.isPending}
           error={errors.title?.message}
           required
         />
@@ -70,7 +70,7 @@ export function AddChapterModal({
           type='number'
           wrapperCN='w-full'
           placeholder='Введите порядковый номер'
-          disabled={chapterMutation.isPending}
+          disabled={createChapter.isPending}
           error={errors.order?.message}
           min={minOrder}
           max={maxOrder}
@@ -82,14 +82,14 @@ export function AddChapterModal({
             type='button'
             className='cursor-pointer text-red-500/80 transition-colors duration-200 hover:text-red-500 disabled:pointer-events-none disabled:opacity-50'
             onClick={handleClose}
-            disabled={chapterMutation.isPending}
+            disabled={createChapter.isPending}
           >
             Отмена
           </button>
           <Button
             type='submit'
             className='text-primary'
-            disabled={chapterMutation.isPending}
+            disabled={createChapter.isPending}
           >
             Создать
           </Button>

@@ -1,5 +1,4 @@
 import type { LucideIcon } from 'lucide-react'
-import type { ReactNode } from 'react'
 
 interface BasePageLink {
   title: string
@@ -8,9 +7,7 @@ interface BasePageLink {
   icon: LucideIcon
 }
 
-export interface CardProps extends BasePageLink {
-  children?: ReactNode
-}
+export type CardProps = BasePageLink
 
 export interface LinkProps extends BasePageLink {
   id: number

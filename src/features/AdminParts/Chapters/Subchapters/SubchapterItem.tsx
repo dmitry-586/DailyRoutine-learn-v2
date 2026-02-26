@@ -1,8 +1,8 @@
 'use client'
 
+import { useDeleteSubchapter } from '@/services/theory'
 import type { Subchapter } from '@/services/types'
 import { Input, Textarea } from '@/shared/ui'
-import { useDeleteSubchapter } from '../../queries'
 
 interface SubchapterItemProps {
   chapterId: string

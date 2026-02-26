@@ -1,12 +1,12 @@
 'use client'
 
 import { useChapterById } from '@/services/hooks'
+import { useDeleteChapter } from '@/services/theory'
 import { Button } from '@/shared/ui'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { Loader2 } from 'lucide-react'
-import { useDeleteChapter } from '../queries'
-import { SubchapterForm } from './components/SubchapterForm'
-import { SubchapterItem } from './components/SubchapterItem'
+import { SubchapterForm } from './Subchapters/SubchapterForm'
+import { SubchapterItem } from './Subchapters/SubchapterItem'
 
 interface ChapterDialogProps {
   id: string
@@ -21,9 +21,9 @@ export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
   const nextOrder = (chapter?.subchapters.at(-1)?.order ?? 0) + 1
 
   return (
-    <Dialog open={isOpen} onClose={handleClose}>
-      <section className='fixed inset-0 flex items-center justify-center bg-black/30 p-4'>
-        <DialogPanel className='bg-background flex max-h-[95vh] w-full max-w-3xl flex-col space-y-4 overflow-auto rounded-xl p-6 pb-0'>
+    <Dialog open={isOpen} onClose={handleClose} className='relative z-50'>
+      <section className='fixed inset-0 flex items-center justify-center bg-black/30 sm:p-4'>
+        <DialogPanel className='bg-background flex h-screen w-full max-w-3xl flex-col space-y-4 overflow-auto p-6 pb-0 sm:max-h-[95vh] sm:rounded-xl'>
           <DialogTitle className='font-semibold'>
             Редактирование главы {chapter?.order}
           </DialogTitle>

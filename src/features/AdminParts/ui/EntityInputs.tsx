@@ -17,19 +17,14 @@ export function EntityInputs({
   orderInputCN,
 }: EntityInputsProps) {
   return (
-    <div className='flex w-full items-end gap-5'>
+    <div className='flex w-full items-end gap-3 sm:gap-5'>
       <Input
         defaultValue={order}
-        wrapperCN='w-26'
-        inputCN={cn('text-center text-sm py-2', orderInputCN)}
+        wrapperCN='w-12 sm:w-26'
+        inputCN={cn('text-center', orderInputCN)}
         label={orderLabel}
       />
-      <Input
-        defaultValue={title}
-        wrapperCN='w-full'
-        inputCN='text-sm py-2'
-        label={titleLabel}
-      />
+      <Input defaultValue={title} wrapperCN='w-full' label={titleLabel} />
     </div>
   )
 }

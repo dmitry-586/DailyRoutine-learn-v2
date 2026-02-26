@@ -1,7 +1,8 @@
 'use client'
 
-import { AddPartModal, PartCard, useParts } from '@/features/AdminParts'
+import { AddPartModal, PartCard } from '@/features/AdminParts'
 import { Part } from '@/services'
+import { useParts } from '@/services/theory'
 import { Button, HomeButton } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
@@ -35,7 +36,7 @@ export default function TheoryAdmin() {
         )}
 
         {!isLoading && !isEmpty && (
-          <ul className='mx-auto flex w-full max-w-3xl flex-col gap-8'>
+          <ul className='mx-auto flex w-full max-w-3xl flex-col gap-4 sm:gap-8'>
             {partsWithChaptersCount.map(({ part, chaptersCount }) => (
               <PartCard
                 key={`${part.id}-${part.order}`}
@@ -51,7 +52,7 @@ export default function TheoryAdmin() {
       </div>
 
       <div className='sticky bottom-5 left-0 z-10 flex gap-5'>
-        <HomeButton />
+        <HomeButton className='max-sm:p-2' />
         <Button onClick={() => setIsModalOpen(true)} variant='default'>
           Добавить часть
         </Button>
