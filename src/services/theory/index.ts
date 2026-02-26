@@ -1,10 +1,13 @@
 export {
-  useChapterMutation,
   useChapters,
+  useCreateChapter,
+  useCreatePart,
+  useCreateSubchapter,
   useDeleteChapter,
   useDeletePart,
   useDeleteSubchapter,
-  usePartMutation,
   useParts,
-  useSubchapterMutation,
+  useUpdateChapter,
+  useUpdatePart,
+  useUpdateSubchapter,
 } from './queries'

@@ -1,6 +1,6 @@
 'use client'
 
-import { useSubchapterMutation } from '@/services/theory'
+import { useCreateSubchapter } from '@/services/theory'
 import { Button, Input, Textarea } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -26,7 +26,7 @@ export function SubchapterForm({ chapterId, nextOrder }: SubchapterFormProps) {
     },
   })
 
-  const createSubchapter = useSubchapterMutation(chapterId)
+  const createSubchapter = useCreateSubchapter(chapterId)
 
   const onSubmit = (data: SubchapterFormValues) => {
     createSubchapter.mutate(

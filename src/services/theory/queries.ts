@@ -1,7 +1,14 @@
 import { queryKeys } from '@/shared/lib'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-import { chapterApi, partApi, subchapterApi } from '../../services/theory/api'
+import {
+  chapterApi,
+  ChapterRequest,
+  partApi,
+  PartRequest,
+  subchapterApi,
+  SubchapterRequest,
+} from './api'
 
 const STALE_TIME = 1000 * 60 * 10
 const GC_TIME = 1000 * 60 * 20
@@ -27,7 +34,7 @@ function useParts() {
   }
 }
 
-function usePartMutation() {
+function useCreatePart() {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -37,6 +44,19 @@ function usePartMutation() {
       toast.success('Новая часть создана')
     },
     onError: (error) => handleError(error, 'Ошибка при создании части'),
+  })
+}
+
+function useUpdatePart() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: PartRequest }) =>
+      partApi.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.part })
+    },
+    onError: (error) => handleError(error, 'Ошибка при обновлении части'),
   })
 }
 
@@ -73,7 +93,7 @@ function useChapters() {
   }
 }
 
-function useChapterMutation() {
+function useCreateChapter() {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -86,6 +106,22 @@ function useChapterMutation() {
       toast.success('Новая глава создана')
     },
     onError: (error) => handleError(error, 'Ошибка при создании главы'),
+  })
+}
+
+function useUpdateChapter() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: ChapterRequest }) =>
+      chapterApi.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.part })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.chapter.all,
+      })
+    },
+    onError: (error) => handleError(error, 'Ошибка при обновлении главы'),
   })
 }
 
@@ -107,7 +143,7 @@ function useDeleteChapter() {
 
 /* ===================== SUBCHAPTER ======================= */
 
-function useSubchapterMutation(chapterId: string) {
+function useCreateSubchapter(chapterId: string) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -122,6 +158,25 @@ function useSubchapterMutation(chapterId: string) {
       toast.success('Новая подглава создана')
     },
     onError: (error) => handleError(error, 'Ошибка при создании подглавы'),
+  })
+}
+
+function useUpdateSubchapter(chapterId: string) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: SubchapterRequest }) =>
+      subchapterApi.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.chapter.all,
+      })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.chapter.byId(chapterId),
+      })
+      toast.success('Подглава обновлена')
+    },
+    onError: (error) => handleError(error, 'Ошибка при обновлении подглавы'),
   })
 }
 
@@ -144,12 +199,15 @@ function useDeleteSubchapter(chapterId: string) {
 }
 
 export {
-  useChapterMutation,
   useChapters,
+  useCreateChapter,
+  useCreatePart,
+  useCreateSubchapter,
   useDeleteChapter,
   useDeletePart,
   useDeleteSubchapter,
-  usePartMutation,
   useParts,
-  useSubchapterMutation,
+  useUpdateChapter,
+  useUpdatePart,
+  useUpdateSubchapter,
 }

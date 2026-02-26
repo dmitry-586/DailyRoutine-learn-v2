@@ -27,7 +27,7 @@ export function PartCard({
   const isMobile = useWindowWidth() <= 640
 
   return (
-    <div className='sm:bg-gray/40 sm:hover:border-primary/50 flex flex-col border-t sm:border-white/10 py-6 transition-all duration-300 sm:rounded-2xl sm:border sm:px-4 sm:shadow-sm sm:hover:shadow-lg'>
+    <div className='sm:bg-gray/40 sm:hover:border-primary/50 flex flex-col border-t py-6 transition-all duration-300 sm:rounded-2xl sm:border sm:border-white/10 sm:px-4 sm:shadow-sm sm:hover:shadow-lg'>
       <EntityInputs
         order={order}
         title={title}

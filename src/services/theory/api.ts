@@ -34,6 +34,10 @@ const partApi = {
     return data
   },
 
+  async update(id: string, data: PartRequest): Promise<void> {
+    await api.patch(`${PART_URL}/${id}`, data)
+  },
+
   async delete(id: string): Promise<void> {
     await api.delete(`${PART_URL}/${id}`)
   },
@@ -53,6 +57,10 @@ const chapterApi = {
     return data
   },
 
+  async update(id: string, data: ChapterRequest): Promise<void> {
+    await api.patch(`${CHAPTER_URL}/${id}`, data)
+  },
+
   async delete(id: string): Promise<void> {
     await api.delete(`${CHAPTER_URL}/${id}`)
   },
@@ -69,9 +77,20 @@ const subchapterApi = {
     return data
   },
 
+  async update(id: string, data: SubchapterRequest): Promise<void> {
+    await api.patch(`${SUBCHAPTER_URL}/${id}`, data)
+  },
+
   async delete(id: string): Promise<void> {
     await api.delete(`${SUBCHAPTER_URL}/${id}`)
   },
 }
 
-export { chapterApi, partApi, subchapterApi }
+export {
+  chapterApi,
+  partApi,
+  subchapterApi,
+  type ChapterRequest,
+  type PartRequest,
+  type SubchapterRequest,
+}

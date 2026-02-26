@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { PartFormValues, partSchema } from './schema'
 import { BaseModal } from './ui'
-import { usePartMutation } from '@/services/theory'
+import { useCreatePart } from '@/services/theory'
 
 interface AddPartModalProps {
   partsCount: number
@@ -18,7 +18,7 @@ export function AddPartModal({
   partsCount,
   handleClose,
 }: AddPartModalProps) {
-  const partMutation = usePartMutation()
+  const createPart = useCreatePart()
 
   const {
     reset,
@@ -31,7 +31,7 @@ export function AddPartModal({
   })
 
   const onSubmit = handleSubmit((data) => {
-    partMutation.mutate(data, {
+    createPart.mutate(data, {
       onSuccess: () => {
         reset()
         handleClose()
@@ -51,7 +51,7 @@ export function AddPartModal({
           label='Название части'
           placeholder='Введите название'
           wrapperCN='w-full'
-          disabled={partMutation.isPending}
+          disabled={createPart.isPending}
           error={errors.title?.message}
           required
         />
@@ -65,7 +65,7 @@ export function AddPartModal({
           type='number'
           wrapperCN='w-full'
           placeholder='Введите порядковый номер'
-          disabled={partMutation.isPending}
+          disabled={createPart.isPending}
           error={errors.order?.message}
           min={1}
           required
@@ -76,14 +76,14 @@ export function AddPartModal({
             type='button'
             className='cursor-pointer text-red-500/80 transition-colors duration-200 hover:text-red-500 disabled:pointer-events-none disabled:opacity-50'
             onClick={handleClose}
-            disabled={partMutation.isPending}
+            disabled={createPart.isPending}
           >
             Отмена
           </button>
           <Button
             type='submit'
             className='text-primary'
-            disabled={partMutation.isPending}
+            disabled={createPart.isPending}
           >
             Создать
           </Button>
