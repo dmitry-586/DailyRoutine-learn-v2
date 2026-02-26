@@ -3,6 +3,7 @@ import {
   BookOpenCheck,
   BookText,
   Code,
+  Component,
   Headphones,
 } from 'lucide-react'
 import type { LinkProps } from './types'
@@ -10,7 +11,7 @@ import type { LinkProps } from './types'
 export const pageLinks: LinkProps[] = [
   {
     id: 1,
-    title: 'Теория',
+    title: 'Теория Web',
     description: 'Изучайте теорию по главам',
     href: '/theory',
     icon: BookText,
@@ -39,8 +40,15 @@ export const pageLinks: LinkProps[] = [
   {
     id: 5,
     title: 'Подкасты',
-    description: 'Слушайте образовательные подкасты',
+    description: 'Слушайте AI-подкасты',
     href: '/podcasts',
     icon: Headphones,
+  },
+  {
+    id: 6,
+    title: 'Теория Figma',
+    description: 'Изучайте дизайн по главам',
+    href: '/podcasts',
+    icon: Component,
   },
 ]

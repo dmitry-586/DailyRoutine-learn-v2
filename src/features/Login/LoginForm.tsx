@@ -67,7 +67,7 @@ export function LoginForm({ isLogin }: LoginFormProps) {
       : 'Зарегистрироваться'
 
   return (
-    <form className='flex w-full flex-col' onSubmit={onSubmit}>
+    <form className='flex w-full flex-col gap-2' onSubmit={onSubmit}>
       {visibleFields.map((field) => (
         <Input
           key={field.name}
@@ -81,7 +81,7 @@ export function LoginForm({ isLogin }: LoginFormProps) {
           className='py-3'
         />
       ))}
-      <Button className='mt-4' type='submit' disabled={isPending}>
+      <Button className='mt-2' type='submit' disabled={isPending}>
         {submitButtonText}
       </Button>
     </form>

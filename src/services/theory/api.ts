@@ -1,8 +1,6 @@
 import type { ChapterWithSubchapters, Part, Subchapter } from '@/services'
 import { api } from '@/shared/lib'
 
-/* ======================= REQUEST TYPES ======================= */
-
 interface PartRequest {
   title: string
   order: number

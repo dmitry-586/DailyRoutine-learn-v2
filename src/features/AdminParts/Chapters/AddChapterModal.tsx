@@ -1,9 +1,9 @@
 import { Button, Input } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useChapterMutation } from '../queries'
 import { BaseModal } from '../ui'
 import { ChapterFormValues, createChapterSchema } from './schema'
+import { useChapterMutation } from '@/services/theory'
 
 interface ChapterModalProps {
   partId: string

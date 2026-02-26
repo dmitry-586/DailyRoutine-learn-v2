@@ -1,7 +1,7 @@
 import { queryKeys } from '@/shared/lib'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-import { chapterApi, partApi, subchapterApi } from './api'
+import { chapterApi, partApi, subchapterApi } from '../../services/theory/api'
 
 const STALE_TIME = 1000 * 60 * 10
 const GC_TIME = 1000 * 60 * 20

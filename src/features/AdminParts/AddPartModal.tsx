@@ -3,9 +3,9 @@
 import { Button, Input } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { usePartMutation } from './queries'
 import { PartFormValues, partSchema } from './schema'
 import { BaseModal } from './ui'
+import { usePartMutation } from '@/services/theory'
 
 interface AddPartModalProps {
   partsCount: number
