@@ -47,16 +47,28 @@ function useCreatePart() {
   })
 }
 
-function useUpdatePart() {
+function useUpdatePartAndChapters() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: PartRequest }) =>
-      partApi.update(id, data),
+    mutationFn: async (payload: {
+      partId: string
+      part: PartRequest
+      chapters?: Array<{ id: string; data: ChapterRequest }>
+    }) => {
+      await partApi.update(payload.partId, payload.part)
+      if (payload.chapters?.length) {
+        await Promise.all(
+          payload.chapters.map(({ id, data }) => chapterApi.update(id, data)),
+        )
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.part })
+      queryClient.invalidateQueries({ queryKey: queryKeys.chapter.all })
+      toast.success('Данные обновлены')
     },
-    onError: (error) => handleError(error, 'Ошибка при обновлении части'),
+    onError: (error) => handleError(error, 'Ошибка при обновлении'),
   })
 }
 
@@ -109,22 +121,6 @@ function useCreateChapter() {
   })
 }
 
-function useUpdateChapter() {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: ChapterRequest }) =>
-      chapterApi.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.part })
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.chapter.all,
-      })
-    },
-    onError: (error) => handleError(error, 'Ошибка при обновлении главы'),
-  })
-}
-
 function useDeleteChapter() {
   const queryClient = useQueryClient()
 
@@ -169,9 +165,6 @@ function useUpdateSubchapter(chapterId: string) {
       subchapterApi.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.chapter.all,
-      })
-      queryClient.invalidateQueries({
         queryKey: queryKeys.chapter.byId(chapterId),
       })
       toast.success('Подглава обновлена')
@@ -207,7 +200,6 @@ export {
   useDeletePart,
   useDeleteSubchapter,
   useParts,
-  useUpdateChapter,
-  useUpdatePart,
+  useUpdatePartAndChapters,
   useUpdateSubchapter,
 }

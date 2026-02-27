@@ -1,9 +1,10 @@
 'use client'
 
 import { useCreateSubchapter } from '@/services/theory'
-import { Button, Input, Textarea } from '@/shared/ui'
+import { Input, Textarea } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { FormFooter } from '../../ui'
 import { subchapterSchema, type SubchapterFormValues } from '../schema'
 
 interface SubchapterFormProps {
@@ -28,7 +29,7 @@ export function SubchapterForm({ chapterId, nextOrder }: SubchapterFormProps) {
 
   const createSubchapter = useCreateSubchapter(chapterId)
 
-  const onSubmit = (data: SubchapterFormValues) => {
+  const onSubmit = handleSubmit((data) => {
     createSubchapter.mutate(
       {
         chapterId,
@@ -41,13 +42,10 @@ export function SubchapterForm({ chapterId, nextOrder }: SubchapterFormProps) {
         },
       },
     )
-  }
+  })
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-1 flex-col border-t pt-4'
-    >
+    <form onSubmit={onSubmit} className='flex flex-1 flex-col border-t pt-4'>
       <p className='text-primary mb-4 text-sm'>
         Новая подглава (№ {nextOrder})
       </p>
@@ -68,11 +66,14 @@ export function SubchapterForm({ chapterId, nextOrder }: SubchapterFormProps) {
         placeholder='Введите описание подглавы'
       />
 
-      <div className='flex justify-end pt-2'>
-        <Button type='submit' disabled={!isValid || createSubchapter.isPending}>
-          {createSubchapter.isPending ? 'Создание...' : 'Создать подглаву'}
-        </Button>
-      </div>
+      <FormFooter
+        onCancel={() => reset()}
+        submitLabel='Создать подглаву'
+        cancelLabel='Очистить'
+        isPending={createSubchapter.isPending}
+        submitDisabled={!isValid}
+        className='flex justify-end pt-2'
+      />
     </form>
   )
 }

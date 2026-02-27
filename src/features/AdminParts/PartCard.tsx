@@ -7,71 +7,82 @@ import { cn } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import { Trash2 } from 'lucide-react'
 import { useState } from 'react'
+import { FormProvider } from 'react-hook-form'
 import { AddChapterModal, ChapterCard } from './Chapters'
 import { EntityInputs } from './ui'
+import { usePartEditor } from './usePartEditor'
 
-interface PartCardProps extends Part {
+interface PartCardProps {
+  part: Part
   chaptersCount: number
 }
 
-export function PartCard({
-  chapters,
-  title,
-  order,
-  id,
-  chaptersCount,
-}: PartCardProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const deletePart = useDeletePart()
-
+export function PartCard({ part, chaptersCount }: PartCardProps) {
   const isMobile = useWindowWidth() <= 640
+  const [isOpen, setIsOpen] = useState(false)
+
+  const minOrder = chaptersCount + 1
+  const maxOrder = chaptersCount + part.chapters.length
+
+  const deletePart = useDeletePart()
+  const { methods, onSubmit } = usePartEditor(part, minOrder, maxOrder)
+  const { isDirty, isValid } = methods.formState
 
   return (
-    <div className='sm:bg-gray/40 sm:hover:border-primary/50 flex flex-col border-t py-6 transition-all duration-300 sm:rounded-2xl sm:border sm:border-white/10 sm:px-4 sm:shadow-sm sm:hover:shadow-lg'>
-      <EntityInputs
-        order={order}
-        title={title}
-        orderLabel={isMobile ? 'Номер' : 'Номер части'}
-        titleLabel='Название части'
-      />
+    <FormProvider {...methods}>
+      <form
+        onSubmit={onSubmit}
+        className='sm:bg-gray/40 sm:hover:border-primary/50 flex flex-col border-t py-6 transition-all duration-300 sm:rounded-2xl sm:border sm:border-white/10 sm:px-4 sm:shadow-sm sm:hover:shadow-lg'
+      >
+        <EntityInputs
+          className='px-4 sm:px-0'
+          orderLabel={isMobile ? 'Номер' : 'Номер части'}
+          titleLabel='Название части'
+          namePrefix='part'
+        />
 
-      <div className='mt-3 flex flex-col border-t border-white/10 pt-5'>
-        {chapters.map((chapter, index) => (
-          <ChapterCard
-            key={chapter.id}
-            id={chapter.id}
-            order={chapter.order}
-            title={chapter.title}
-            isFirst={index === 0}
-            isMobile={isMobile}
-          />
-        ))}
-      </div>
-
-      <div className='mt-3 flex justify-between'>
-        <Button
-          onClick={() => deletePart.mutate(id)}
-          className={cn(
-            'border-red-500/80 text-red-500/80 hover:bg-red-500/10 active:bg-red-500/20',
-            isMobile && 'px-2',
-          )}
-        >
-          {isMobile ? <Trash2 className='size-5' /> : 'Удалить всю часть'}
-        </Button>
-
-        <div className='flex gap-5'>
-          <Button onClick={() => setIsOpen(true)}>Добавить главу</Button>
-          <Button variant='default'>Сохранить</Button>
+        <div className='mt-3 flex flex-col border-t border-white/10 pt-5'>
+          {part.chapters.map((chapter, index) => (
+            <ChapterCard
+              key={chapter.id}
+              chapter={chapter}
+              isFirst={index === 0}
+              index={index}
+            />
+          ))}
         </div>
-      </div>
+
+        <div className='mt-3 flex justify-between'>
+          <Button
+            type='button'
+            onClick={() => deletePart.mutate(part.id)}
+            className={cn(
+              'border-red-500/80 text-red-500/80 hover:bg-red-500/10 active:bg-red-500/20',
+              isMobile && 'px-2',
+            )}
+          >
+            {isMobile ? <Trash2 className='size-5' /> : 'Удалить всю часть'}
+          </Button>
+
+          <div className='flex gap-5'>
+            <Button type='button' onClick={() => setIsOpen(true)}>
+              Добавить главу
+            </Button>
+
+            <Button type='submit' disabled={!isDirty || !isValid}>
+              Сохранить
+            </Button>
+          </div>
+        </div>
+      </form>
 
       <AddChapterModal
-        partId={id}
+        partId={part.id}
         isOpen={isOpen}
-        minOrder={chaptersCount + 1}
-        maxOrder={chaptersCount + chapters.length + 1}
+        minOrder={minOrder}
+        maxOrder={maxOrder + 1}
         handleClose={() => setIsOpen(false)}
       />
-    </div>
+    </FormProvider>
   )
 }

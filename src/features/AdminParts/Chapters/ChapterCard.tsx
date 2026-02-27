@@ -1,24 +1,21 @@
 'use client'
 
 import { Chapter } from '@/services'
+import { useWindowWidth } from '@/services/hooks'
 import { Button } from '@/shared/ui'
 import { CircleAlert } from 'lucide-react'
 import { useState } from 'react'
 import { EntityInputs } from '../ui'
 import { ChapterModal } from './ChapterModal'
 
-interface ChapterCardProps extends Chapter {
+interface ChapterCardProps {
+  chapter: Chapter
   isFirst: boolean
-  isMobile: boolean
+  index: number
 }
 
-export function ChapterCard({
-  order,
-  title,
-  id,
-  isFirst,
-  isMobile,
-}: ChapterCardProps) {
+export function ChapterCard({ chapter, isFirst, index }: ChapterCardProps) {
+  const isMobile = useWindowWidth() <= 640
   const [isOpen, setIsOpen] = useState(false)
 
   const handleClose = () => setIsOpen(false)
@@ -26,23 +23,26 @@ export function ChapterCard({
   return (
     <div className='flex items-end gap-3 sm:gap-5'>
       <EntityInputs
-        key={`${id}-${order}`}
-        order={order}
-        title={title}
+        key={`${chapter.id}-${chapter.order}`}
         orderLabel={isFirst ? (isMobile ? 'Номер' : 'Номер главы') : ''}
         titleLabel={isFirst ? 'Название главы' : ''}
+        namePrefix={`chapters.${index}`}
       />
       {isMobile ? (
-        <button onClick={() => setIsOpen(true)} className='mb-7'>
+        <button type='button' onClick={() => setIsOpen(true)} className='mb-7'>
           <CircleAlert className='text-primary hover:text-primary/80 size-7 cursor-pointer transition-colors duration-200' />
         </button>
       ) : (
-        <Button onClick={() => setIsOpen(true)} className='mb-5 py-2 lg:py-3'>
+        <Button
+          type='button'
+          onClick={() => setIsOpen(true)}
+          className='mb-5 py-2 lg:py-3'
+        >
           Открыть
         </Button>
       )}
 
-      <ChapterModal id={id} isOpen={isOpen} handleClose={handleClose} />
+      <ChapterModal id={chapter.id} isOpen={isOpen} handleClose={handleClose} />
     </div>
   )
 }

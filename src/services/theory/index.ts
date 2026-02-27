@@ -7,7 +7,6 @@ export {
   useDeletePart,
   useDeleteSubchapter,
   useParts,
-  useUpdateChapter,
-  useUpdatePart,
+  useUpdatePartAndChapters,
   useUpdateSubchapter,
 } from './queries'

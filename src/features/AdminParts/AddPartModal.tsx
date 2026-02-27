@@ -1,11 +1,10 @@
 'use client'
 
-import { Button, Input } from '@/shared/ui'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { PartFormValues, partSchema } from './schema'
-import { BaseModal } from './ui'
 import { useCreatePart } from '@/services/theory'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, useForm } from 'react-hook-form'
+import { PartFormValues, partSchema } from './schema'
+import { BaseModal, EntityInputs, FormFooter } from './ui'
 
 interface AddPartModalProps {
   partsCount: number
@@ -20,20 +19,18 @@ export function AddPartModal({
 }: AddPartModalProps) {
   const createPart = useCreatePart()
 
-  const {
-    reset,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PartFormValues>({
+  const methods = useForm<PartFormValues>({
     mode: 'onChange',
     resolver: zodResolver(partSchema),
+    defaultValues: {
+      order: partsCount + 1,
+    },
   })
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit((data) => {
     createPart.mutate(data, {
       onSuccess: () => {
-        reset()
+        methods.reset()
         handleClose()
       },
     })
@@ -45,50 +42,21 @@ export function AddPartModal({
       onClose={handleClose}
       title='Добавить новую часть'
     >
-      <form onSubmit={onSubmit} className='mt-5'>
-        <Input
-          {...register('title')}
-          label='Название части'
-          placeholder='Введите название'
-          wrapperCN='w-full'
-          disabled={createPart.isPending}
-          error={errors.title?.message}
-          required
-        />
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit} className='mt-5 flex flex-col gap-4'>
+          <EntityInputs
+            orderLabel='Порядок'
+            titleLabel='Название части'
+            orderInputCN='w-full'
+          />
 
-        <Input
-          {...register('order', {
-            valueAsNumber: true,
-          })}
-          defaultValue={partsCount + 1}
-          label='Порядок'
-          type='number'
-          wrapperCN='w-full'
-          placeholder='Введите порядковый номер'
-          disabled={createPart.isPending}
-          error={errors.order?.message}
-          min={1}
-          required
-        />
-
-        <div className='flex justify-end gap-4 pt-4'>
-          <button
-            type='button'
-            className='cursor-pointer text-red-500/80 transition-colors duration-200 hover:text-red-500 disabled:pointer-events-none disabled:opacity-50'
-            onClick={handleClose}
-            disabled={createPart.isPending}
-          >
-            Отмена
-          </button>
-          <Button
-            type='submit'
-            className='text-primary'
-            disabled={createPart.isPending}
-          >
-            Создать
-          </Button>
-        </div>
-      </form>
+          <FormFooter
+            onCancel={handleClose}
+            isPending={createPart.isPending}
+            submitDisabled={!methods.formState.isValid}
+          />
+        </form>
+      </FormProvider>
     </BaseModal>
   )
 }

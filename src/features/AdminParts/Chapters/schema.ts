@@ -1,23 +1,25 @@
 import z from 'zod'
-import { baseOrderSchema } from '../schema'
+import { baseOrderSchema, entitySchema } from '../schema'
 
+// Схема для добавления главы с проверкой диапазона порядка
 export const createChapterSchema = (minOrder: number, maxOrder: number) =>
-  z.object({
-    title: z.string().min(6, 'Минимум 6 символов'),
+  entitySchema.extend({
     order: baseOrderSchema
       .refine((value) => value >= minOrder, {
-        message: `Минимальное значение: ${minOrder}`,
+        message: `Минимум: ${minOrder}`,
       })
       .refine((value) => value <= maxOrder, {
-        message: `Максимальное значение: ${maxOrder}`,
+        message: `Максимум: ${maxOrder}`,
       }),
   })
 
-export const chapterSchema = createChapterSchema(1, Number.MAX_SAFE_INTEGER)
+// Базовая схема главы
+export const chapterSchema = entitySchema
 
+// Схема подглавы
 export const subchapterSchema = z.object({
-  title: z.string().min(6, 'Минимум 6 символов'),
-  description: z.string().min(10, 'Минимум 10 символов'),
+  title: z.string().min(1, 'Обязательное поле'),
+  description: z.string().min(1, 'Обязательное поле'),
 })
 
 export type ChapterFormValues = z.infer<typeof chapterSchema>

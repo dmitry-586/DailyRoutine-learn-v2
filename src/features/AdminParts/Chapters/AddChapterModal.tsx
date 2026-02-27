@@ -1,8 +1,9 @@
+'use client'
+
 import { useCreateChapter } from '@/services/theory'
-import { Button, Input } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { BaseModal } from '../ui'
+import { FormProvider, useForm } from 'react-hook-form'
+import { BaseModal, EntityInputs, FormFooter } from '../ui'
 import { ChapterFormValues, createChapterSchema } from './schema'
 
 interface ChapterModalProps {
@@ -22,22 +23,22 @@ export function AddChapterModal({
 }: ChapterModalProps) {
   const createChapter = useCreateChapter()
 
-  const {
-    reset,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ChapterFormValues>({
+  const methods = useForm<ChapterFormValues>({
     mode: 'onChange',
     resolver: zodResolver(createChapterSchema(minOrder, maxOrder)),
+    values: isOpen
+      ? {
+          title: '',
+          order: maxOrder,
+        }
+      : undefined,
   })
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit((data) => {
     createChapter.mutate(
       { ...data, partId },
       {
         onSuccess: () => {
-          reset()
           handleClose()
         },
       },
@@ -50,51 +51,21 @@ export function AddChapterModal({
       onClose={handleClose}
       title='Добавить новую главу'
     >
-      <form onSubmit={onSubmit} className='mt-5'>
-        <Input
-          {...register('title')}
-          label='Название главы'
-          placeholder='Введите название'
-          wrapperCN='w-full'
-          disabled={createChapter.isPending}
-          error={errors.title?.message}
-          required
-        />
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit} className='mt-5 flex flex-col gap-4'>
+          <EntityInputs
+            orderLabel='Порядок'
+            titleLabel='Название главы'
+            orderInputCN='w-full'
+          />
 
-        <Input
-          {...register('order', {
-            valueAsNumber: true,
-          })}
-          defaultValue={Math.max(maxOrder, minOrder)}
-          label='Порядок'
-          type='number'
-          wrapperCN='w-full'
-          placeholder='Введите порядковый номер'
-          disabled={createChapter.isPending}
-          error={errors.order?.message}
-          min={minOrder}
-          max={maxOrder}
-          required
-        />
-
-        <div className='flex justify-end gap-4 pt-4'>
-          <button
-            type='button'
-            className='cursor-pointer text-red-500/80 transition-colors duration-200 hover:text-red-500 disabled:pointer-events-none disabled:opacity-50'
-            onClick={handleClose}
-            disabled={createChapter.isPending}
-          >
-            Отмена
-          </button>
-          <Button
-            type='submit'
-            className='text-primary'
-            disabled={createChapter.isPending}
-          >
-            Создать
-          </Button>
-        </div>
-      </form>
+          <FormFooter
+            onCancel={handleClose}
+            isPending={createChapter.isPending}
+            submitDisabled={!methods.formState.isValid}
+          />
+        </form>
+      </FormProvider>
     </BaseModal>
   )
 }

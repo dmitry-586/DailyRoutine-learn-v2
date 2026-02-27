@@ -46,8 +46,8 @@ export const pageLinks: LinkProps[] = [
   },
   {
     id: 6,
-    title: 'Теория Figma',
-    description: 'Изучайте дизайн по главам',
+    title: 'Roadmap',
+    description: 'Посмотрите свой путь в разработке',
     href: '/podcasts',
     icon: Component,
   },
