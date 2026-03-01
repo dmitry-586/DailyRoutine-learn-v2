@@ -10,13 +10,11 @@ export function Header() {
     : user?.email || 'Не авторизован'
 
   return (
-    <>
-      <header className='flex items-center justify-between pt-5'>
-        <div className='ml-auto flex items-center gap-2'>
-          <p>{displayEmail}</p>
-          <AuthButton />
-        </div>
-      </header>
-    </>
+    <header className='flex items-center justify-between pt-5'>
+      <div className='ml-auto flex items-center gap-2'>
+        <p className='text-sm sm:text-base'>{displayEmail}</p>
+        <AuthButton />
+      </div>
+    </header>
   )
 }

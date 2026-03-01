@@ -18,7 +18,7 @@ export function ProfileMenu() {
     : []
 
   return (
-    <nav className='rounded-2xl border border-white/20 bg-white/10 shadow-sm'>
+    <nav className='bg-gray rounded-2xl'>
       <nav className='flex flex-col gap-3 px-4 py-2 text-sm'>
         {filteredMenu.map((el) => {
           return (

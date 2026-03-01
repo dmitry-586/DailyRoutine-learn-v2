@@ -1,5 +1,6 @@
 'use client'
 
+import { useWindowWidth } from '@/services/hooks'
 import { cn } from '@/shared/lib'
 import { BookCopy, BookText, Headphones, LucideIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -35,6 +36,7 @@ const AdminLinks: AdminLinksProps[] = [
 
 export function NavAdmin() {
   const pathname = usePathname()
+  const isMobile = useWindowWidth() <= 640
 
   return (
     <nav className='mt-5 flex justify-center gap-5'>
@@ -50,7 +52,7 @@ export function NavAdmin() {
                 'border-primary/50 bg-primary/20 hover:bg-primary/30 transition-colors duration-200',
             )}
           >
-            <Icon className='size-4' />
+            {!isMobile && <Icon className='size-4' />}
             <h3 className='font-medium'>{el.title}</h3>
           </Link>
         )

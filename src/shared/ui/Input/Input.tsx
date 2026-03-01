@@ -48,7 +48,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   return (
     <div className={cn('relative inline-flex flex-col gap-2 pb-5', wrapperCN)}>
       {label && (
-        <label htmlFor={inputId} className={cn('text-primary text-sm', labelCN)}>
+        <label
+          htmlFor={inputId}
+          className={cn('text-primary text-sm lg:text-base', labelCN)}
+        >
           {label}
         </label>
       )}
@@ -64,7 +67,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           id={inputId}
           type={isPassword ? (showPassword ? 'text' : 'password') : type}
           className={cn(
-            'min-w-0 flex-1 px-3 py-2 text-sm outline-none disabled:pointer-events-none disabled:opacity-50',
+            'min-w-0 flex-1 truncate px-3 py-2.5 text-sm outline-none disabled:pointer-events-none disabled:opacity-50 lg:py-3 lg:text-base',
             inputCN,
             className,
           )}
