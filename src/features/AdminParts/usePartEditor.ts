@@ -25,13 +25,8 @@ export function usePartEditor(part: Part, minOrder: number, maxOrder: number) {
 
   const methods = useForm<PartEditorValues>({
     mode: 'onChange',
-    resolver: (values, context, options) => {
-      return zodResolver(schema)(values, context, options)
-    },
+    resolver: zodResolver(schema),
     values,
-    resetOptions: {
-      keepDirtyValues: true,
-    },
   })
 
   const onSubmit = methods.handleSubmit((data) => {

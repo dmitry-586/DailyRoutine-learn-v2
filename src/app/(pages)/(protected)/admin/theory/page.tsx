@@ -1,7 +1,6 @@
 'use client'
 
 import { AddPartModal, PartCard } from '@/features/AdminParts'
-import { Part } from '@/services'
 import { useParts } from '@/services/theory'
 import { Button, HomeButton } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
@@ -12,18 +11,12 @@ export default function TheoryAdmin() {
   const { parts, isLoading, isEmpty } = useParts()
 
   const partsWithChaptersCount = useMemo(() => {
-    return parts.reduce(
-      (acc: { part: Part; chaptersCount: number }[], part, index) => {
-        const previousTotal =
-          index === 0
-            ? 0
-            : acc[index - 1].chaptersCount + parts[index - 1].chapters.length
-
-        acc.push({ part, chaptersCount: previousTotal })
-        return acc
-      },
-      [],
-    )
+    let offset = 0
+    return parts.map((part) => {
+      const chaptersCount = offset
+      offset += part.chapters.length
+      return { part, chaptersCount }
+    })
   }, [parts])
 
   return (

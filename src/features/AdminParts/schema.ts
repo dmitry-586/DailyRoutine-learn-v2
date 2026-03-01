@@ -1,4 +1,4 @@
-import z, { ZodIssueCode } from 'zod'
+import z from 'zod'
 
 // Базовая схема для числовых полей порядка
 export const baseOrderSchema = z
@@ -24,31 +24,20 @@ export const partSchema = entitySchema
 
 // Схема для всего редактора карточки части (включая главы)
 export const createPartEditorSchema = (minOrder: number, maxOrder: number) =>
-  z
-    .object({
-      part: entitySchema,
-      chapters: z.array(
-        entitySchema.extend({
-          order: baseOrderSchema
-            .refine((value) => value >= minOrder, {
-              message: `Минимум: ${minOrder}`,
-            })
-            .refine((value) => value <= maxOrder, {
-              message: `Максимум: ${maxOrder}`,
-            }),
-        }),
-      ),
-    })
-    .superRefine((data, ctx) => {
-      const orders = data.chapters.map((c) => c.order)
-      if (new Set(orders).size !== orders.length) {
-        ctx.addIssue({
-          path: ['chapters'],
-          message: 'Номера глав должны быть уникальны внутри части',
-          code: ZodIssueCode.custom,
-        })
-      }
-    })
+  z.object({
+    part: entitySchema,
+    chapters: z.array(
+      entitySchema.extend({
+        order: baseOrderSchema
+          .refine((value) => value >= minOrder, {
+            message: `Минимум: ${minOrder}`,
+          })
+          .refine((value) => value <= maxOrder, {
+            message: `Максимум: ${maxOrder}`,
+          }),
+      }),
+    ),
+  })
 
 export type PartFormValues = z.infer<typeof partSchema>
 export type PartEditorValues = z.infer<

@@ -23,7 +23,7 @@ export function ChapterCard({ chapter, isFirst, index }: ChapterCardProps) {
   return (
     <div className='flex items-end gap-3 sm:gap-5'>
       <EntityInputs
-        key={`${chapter.id}-${chapter.order}`}
+        key={`${chapter.id}-${chapter.order}-${index}`}
         orderLabel={isFirst ? (isMobile ? 'Номер' : 'Номер главы') : ''}
         titleLabel={isFirst ? 'Название главы' : ''}
         namePrefix={`chapters.${index}`}
