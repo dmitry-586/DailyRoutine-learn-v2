@@ -72,7 +72,7 @@ export function SubchapterForm({ chapterId, nextOrder }: SubchapterFormProps) {
         cancelLabel='Очистить'
         isPending={createSubchapter.isPending}
         submitDisabled={!isValid}
-        className='flex justify-end pt-2'
+        className='flex justify-between pt-2'
       />
     </form>
   )

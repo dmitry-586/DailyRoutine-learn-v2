@@ -1,14 +1,16 @@
-import { BurgerButton } from '@/features/Header/components/BurgerButton'
-import { BackButton } from '@/shared/ui'
+import { partApi } from '@/services/theory/api'
+import { redirect } from 'next/navigation'
 
-export default function Theory() {
-  return (
-    <>
-      <div className='flex flex-1 flex-col gap-3'></div>
-      <div className='sticky bottom-5 left-0 z-10 flex gap-5'>
-        <BackButton />
-        <BurgerButton />
-      </div>
-    </>
-  )
+export default async function TheoryPage() {
+  const parts = await partApi.getAll()
+  const sortedParts = [...parts].sort((a, b) => a.order - b.order)
+
+  for (const part of sortedParts) {
+    const firstChapter = [...part.chapters].sort((a, b) => a.order - b.order)[0]
+    if (firstChapter) {
+      redirect(`/theory/${firstChapter.id}`)
+    }
+  }
+
+  return <div>Учебник пуст</div>
 }

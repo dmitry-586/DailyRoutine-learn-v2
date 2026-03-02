@@ -49,6 +49,13 @@ const chapterApi = {
     return data
   },
 
+  async getById(id: string): Promise<ChapterWithSubchapters> {
+    const { data } = await api.get<ChapterWithSubchapters>(
+      `${CHAPTER_URL}/${id}`,
+    )
+    return data
+  },
+
   async create(payload: ChapterRequest): Promise<ChapterWithSubchapters> {
     const { data } = await api.post<ChapterWithSubchapters>(
       CHAPTER_URL,

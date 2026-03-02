@@ -43,7 +43,7 @@ export function SubchapterItem({ chapterId, subchapter }: SubchapterItemProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className='flex flex-col items-start border-t pt-4'
+      className='flex flex-col items-start border-t py-4'
     >
       <div className='flex w-full flex-col'>
         <Input
@@ -58,7 +58,7 @@ export function SubchapterItem({ chapterId, subchapter }: SubchapterItemProps) {
         />
       </div>
 
-      <div className='flex w-full justify-between gap-4'>
+      <div className='flex w-full justify-between items-center gap-4'>
         <button
           type='button'
           onClick={() => deleteSubchapter.mutate(subchapter.id)}
