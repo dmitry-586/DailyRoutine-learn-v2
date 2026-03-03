@@ -20,10 +20,10 @@ export default function TheoryAdmin() {
   }, [parts])
 
   return (
-    <section className='flex h-full flex-1 flex-col'>
+    <section className='flex h-full flex-1 flex-col pb-5'>
       <div className='mt-5 flex flex-1 flex-col'>
         {isLoading && (
-          <Loader2 className='text-primary mx-auto mt-10 animate-spin' />
+          <Loader2 className='text-primary m-auto mx-auto animate-spin' />
         )}
 
         {!isLoading && isEmpty && (
@@ -43,8 +43,8 @@ export default function TheoryAdmin() {
         )}
       </div>
 
-      <div className='sticky bottom-5 left-0 z-10 flex gap-5'>
-        <HomeButton className='max-sm:p-2' />
+      <div className='sticky bottom-5 left-0 z-10 inline-flex w-fit gap-5'>
+        <HomeButton className='max-md:p-2' />
         <Button onClick={() => setIsModalOpen(true)} variant='default'>
           Добавить часть
         </Button>

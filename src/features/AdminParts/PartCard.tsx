@@ -36,7 +36,6 @@ export function PartCard({ part, chaptersCount }: PartCardProps) {
       >
         <EntityInputs
           key={`${part.id}-${part.order}`}
-          className='px-4 sm:px-0'
           orderLabel={isMobile ? 'Номер' : 'Номер части'}
           titleLabel='Название части'
           namePrefix='part'

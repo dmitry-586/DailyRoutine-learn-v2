@@ -25,23 +25,22 @@ export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
       isOpen={isOpen}
       onClose={handleClose}
       title={`Редактирование главы ${chapter?.order ?? ''}`}
-      className='max-w-3xl'
+      className='max-w-3xl pb-0 max-md:max-h-screen max-md:rounded-none max-md:border-none max-sm:p-4 max-sm:pb-0'
+      wrapperCN='max-md:p-0'
     >
       {isLoading && <Loader2 className='mx-auto animate-spin' />}
 
       {chapter && (
         <>
-          <p className='text-primary mt-2'>{chapter.title}</p>
+          <p className='text-primary my-2'>{chapter.title}</p>
 
-          <div className='mt-4 space-y-4'>
-            {chapter.subchapters.map((sub) => (
-              <SubchapterItem key={sub.id} chapterId={id} subchapter={sub} />
-            ))}
-          </div>
+          {chapter.subchapters.map((sub) => (
+            <SubchapterItem key={sub.id} chapterId={id} subchapter={sub} />
+          ))}
 
           <SubchapterForm chapterId={id} nextOrder={nextOrder} />
 
-          <div className='bg-background sticky bottom-0 mt-4 flex justify-between gap-5 border-t pt-4'>
+          <div className='bg-background sticky bottom-0 mt-4 flex justify-between gap-5 border-t py-4'>
             <button
               type='button'
               onClick={handleClose}

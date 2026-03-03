@@ -1,4 +1,5 @@
 export {
+  useChapterById,
   useChapters,
   useCreateChapter,
   useCreatePart,

@@ -105,6 +105,20 @@ function useChapters() {
   }
 }
 
+function useChapterById(id: string) {
+  const { data, isPending } = useQuery({
+    queryKey: queryKeys.chapter.byId(id),
+    queryFn: () => chapterApi.getById(id),
+    staleTime: STALE_TIME,
+    gcTime: GC_TIME,
+  })
+
+  return {
+    chapter: data,
+    isLoading: isPending,
+  }
+}
+
 function useCreateChapter() {
   const queryClient = useQueryClient()
 
@@ -192,6 +206,7 @@ function useDeleteSubchapter(chapterId: string) {
 }
 
 export {
+  useChapterById,
   useChapters,
   useCreateChapter,
   useCreatePart,

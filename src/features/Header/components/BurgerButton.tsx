@@ -1,10 +1,14 @@
 import { Button } from '@/shared/ui'
-import { TextAlignCenter } from 'lucide-react'
+import { TextAlignCenter, X } from 'lucide-react'
+import { ButtonHTMLAttributes } from 'react'
 
-export function BurgerButton() {
+export function BurgerButton({
+  isOpen,
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement> & { isOpen?: boolean }) {
   return (
-    <Button variant='glass'>
-      <TextAlignCenter />
+    <Button variant='glass' {...props}>
+      {isOpen ? <X /> : <TextAlignCenter />}
     </Button>
   )
 }
