@@ -1,4 +1,5 @@
 import { chapterApi } from '@/services/theory/api'
+import MarkdownRenderer from '@/services/theory/MarkdownRenderer'
 
 export default async function Theory({
   params,
@@ -9,16 +10,16 @@ export default async function Theory({
   const chapter = await chapterApi.getById(id)
 
   return (
-    <div className='flex flex-1 flex-col gap-3'>
-      <h1 className='text-2xl font-bold'>
+    <div className='flex flex-1 flex-col gap-3 pb-5'>
+      <h1 className='text-lg font-semibold sm:text-xl lg:text-2xl'>
         Глава: {chapter.order} - {chapter.title}
       </h1>
       <div className='flex flex-col gap-5'>
         <div className='prose max-w-none'>
           {chapter.subchapters.map((subchapter) => (
             <div key={subchapter.id}>
-              <h2>{subchapter.title}</h2>
-              <p>{subchapter.description}</p>
+              <h2 className='text-lg font-medium'>{subchapter.title}</h2>
+              <MarkdownRenderer content={subchapter.description} />
             </div>
           ))}
         </div>

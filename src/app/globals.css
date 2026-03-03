@@ -52,3 +52,7 @@ input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+pre code.hljs {
+  background-color: var(--dark-gray);
+}
