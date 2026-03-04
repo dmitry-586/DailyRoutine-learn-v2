@@ -18,7 +18,7 @@ export default async function Theory({
         <div className='prose max-w-none'>
           {chapter.subchapters.map((subchapter) => (
             <div key={subchapter.id}>
-              <h2 className='text-lg font-medium'>{subchapter.title}</h2>
+              <h2 className='text-lg'>{subchapter.title}</h2>
               <MarkdownRenderer content={subchapter.description} />
             </div>
           ))}

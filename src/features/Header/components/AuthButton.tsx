@@ -16,7 +16,7 @@ export function AuthButton() {
           alt='user'
           width={24}
           height={24}
-          className='size-5 sm:size-6'
+          className='size-6'
         />
       </PopoverButton>
       <PopoverPanel

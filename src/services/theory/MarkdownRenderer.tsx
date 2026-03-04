@@ -11,22 +11,36 @@ interface MarkdownRendererProps {
 
 const components: Components = {
   h1: ({ children }) => (
-    <h1 className='mt-6 mb-4 text-xl font-semibold'>{children}</h1>
+    <h1 className='mb-6 text-3xl max-md:text-2xl max-sm:mb-4 max-sm:text-xl'>
+      {children}
+    </h1>
   ),
   h2: ({ children }) => (
-    <h2 className='mt-5 mb-3 text-lg font-medium'>{children}</h2>
+    <h2 className='mt-5 mb-4 scroll-mt-20 text-2xl max-sm:text-xl'>
+      {children}
+    </h2>
   ),
-  h3: ({ children }) => <h3 className='mt-4 mb-2 font-medium'>{children}</h3>,
-  p: ({ children }) => <p className='mb-4 max-sm:text-sm'>{children}</p>,
-  ul: ({ children }) => <ul className='mb-4 list-disc pl-5'>{children}</ul>,
-  ol: ({ children }) => <ol className='mb-4 list-decimal pl-5'>{children}</ol>,
+  h3: ({ children }) => (
+    <h3 className='mt-6 mb-3 scroll-mt-20 text-xl max-sm:text-lg'>
+      {children}
+    </h3>
+  ),
+  p: ({ children }) => <p className='mb-4'>{children}</p>,
+  ul: ({ children }) => (
+    <ul className='mb-4 list-outside list-disc space-y-1.5 pl-5'>{children}</ul>
+  ),
+  ol: ({ children }) => (
+    <ol className='mb-4 list-outside list-decimal space-y-1.5 pl-5'>
+      {children}
+    </ol>
+  ),
   li: ({ children }) => <li className='mb-1'>{children}</li>,
   a: ({ href, children }) => (
     <a
       href={href || '#'}
-      className='text-primary text-sm hover:underline'
+      className='text-primary hover:underline'
       target='_blank'
-      rel='noopener'
+      rel='noopener noreferrer'
     >
       {children}
     </a>
