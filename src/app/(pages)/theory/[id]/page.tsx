@@ -10,7 +10,7 @@ export default async function Theory({
   const chapter = await chapterApi.getById(id)
 
   return (
-    <div className='flex flex-1 flex-col gap-3 pb-5'>
+    <div className='flex flex-1 flex-col gap-3 py-5'>
       <h1 className='text-lg font-semibold sm:text-xl lg:text-2xl'>
         Глава: {chapter.order} - {chapter.title}
       </h1>

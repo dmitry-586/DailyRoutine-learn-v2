@@ -25,7 +25,7 @@ export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
       isOpen={isOpen}
       onClose={handleClose}
       title={`Редактирование главы ${chapter?.order ?? ''}`}
-      className='max-w-3xl pb-0 max-md:max-h-screen max-md:rounded-none max-md:border-none max-sm:p-4 max-sm:pb-0'
+      className='max-w-3xl pb-0 max-md:max-h-svh max-md:rounded-none max-md:border-none max-sm:p-4 max-sm:pb-0'
       wrapperCN='max-md:p-0'
     >
       {isLoading && <Loader2 className='mx-auto animate-spin' />}

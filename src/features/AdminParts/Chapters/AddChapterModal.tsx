@@ -54,7 +54,7 @@ export function AddChapterModal({
       <FormProvider {...methods}>
         <form onSubmit={onSubmit} className='mt-5 flex flex-col gap-4'>
           <EntityInputs
-            orderLabel='Порядок'
+            orderLabel='Номер'
             titleLabel='Название главы'
             orderInputCN='w-full'
           />

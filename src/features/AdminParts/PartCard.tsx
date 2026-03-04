@@ -2,13 +2,13 @@
 
 import { Part } from '@/services'
 import { useWindowWidth } from '@/services/hooks'
-import { useDeletePart } from '@/services/theory'
 import { cn } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import { Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { FormProvider } from 'react-hook-form'
 import { AddChapterModal, ChapterCard } from './Chapters'
+import { DeletePartModal } from './DeletePartModal'
 import { EntityInputs } from './ui'
 import { usePartEditor } from './usePartEditor'
 
@@ -20,11 +20,11 @@ interface PartCardProps {
 export function PartCard({ part, chaptersCount }: PartCardProps) {
   const isMobile = useWindowWidth() <= 640
   const [isOpen, setIsOpen] = useState(false)
+  const [isDelete, setIsDelete] = useState(false)
 
   const minOrder = chaptersCount + 1
   const maxOrder = chaptersCount + part.chapters.length
 
-  const deletePart = useDeletePart()
   const { methods, onSubmit } = usePartEditor(part, minOrder, maxOrder)
   const { isDirty, isValid } = methods.formState
 
@@ -55,11 +55,9 @@ export function PartCard({ part, chaptersCount }: PartCardProps) {
         <div className='mt-3 flex justify-between'>
           <Button
             type='button'
-            onClick={() => deletePart.mutate(part.id)}
-            className={cn(
-              'border-red-500/80 text-red-500/80 hover:bg-red-500/10 active:bg-red-500/20',
-              isMobile && 'px-2',
-            )}
+            variant='red'
+            onClick={() => setIsDelete(true)}
+            className={cn(isMobile && 'px-2')}
           >
             {isMobile ? <Trash2 className='size-5' /> : 'Удалить всю часть'}
           </Button>
@@ -82,6 +80,11 @@ export function PartCard({ part, chaptersCount }: PartCardProps) {
         minOrder={minOrder}
         maxOrder={maxOrder + 1}
         handleClose={() => setIsOpen(false)}
+      />
+      <DeletePartModal
+        partId={part.id}
+        isOpen={isDelete}
+        handleClose={() => setIsDelete(false)}
       />
     </FormProvider>
   )
