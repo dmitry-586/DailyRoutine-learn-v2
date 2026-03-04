@@ -44,7 +44,7 @@ export default function TheoryAdmin() {
       </div>
 
       <div className='sticky bottom-5 left-0 z-10 inline-flex w-fit gap-5'>
-        <HomeButton className='max-md:p-2' />
+        <HomeButton className='size-11 p-2.5' />
         <Button onClick={() => setIsModalOpen(true)} variant='default'>
           Добавить часть
         </Button>

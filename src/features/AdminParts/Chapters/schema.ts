@@ -18,7 +18,7 @@ export const chapterSchema = entitySchema
 
 // Схема подглавы
 export const subchapterSchema = z.object({
-  title: z.string().min(1, 'Обязательное поле'),
+  title: z.string(),
   description: z.string().min(1, 'Обязательное поле'),
 })
 

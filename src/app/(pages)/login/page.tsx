@@ -16,9 +16,7 @@ export default function RegisterPage() {
         <>
           <div className='flex w-full items-end justify-between'>
             <div className='flex flex-col gap-2'>
-              <h2 className='text-xl'>
-                {isLogin ? 'Вход' : 'Регистрация'}
-              </h2>
+              <h2 className='text-xl'>{isLogin ? 'Вход' : 'Регистрация'}</h2>
               <Link
                 href='/'
                 className='hover:text-primary flex items-center gap-1 text-sm transition-colors duration-200'
@@ -27,14 +25,14 @@ export default function RegisterPage() {
                 <p>На главную</p>
               </Link>
             </div>
-            <div className='flex gap-2'>
+            <div className='flex gap-2 max-sm:text-sm'>
               <p>{isLogin ? 'Нет аккаунта?' : 'Есть аккаунт?'}</p>
               <button
                 type='button'
                 onClick={setIsLogin}
                 className='text-primary cursor-pointer'
               >
-                {isLogin ? 'Зарегистрироваться' : 'Войти'}
+                {isLogin ? 'Регистрация' : 'Войти'}
               </button>
             </div>
           </div>
