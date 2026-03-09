@@ -17,10 +17,12 @@ export const createChapterSchema = (minOrder: number, maxOrder: number) =>
 export const chapterSchema = entitySchema
 
 // Схема подглавы
-export const subchapterSchema = z.object({
-  title: z.string(),
-  description: z.string().min(1, 'Обязательное поле'),
-})
+export const createSubchapterSchema = (maxOrder: number) =>
+  createChapterSchema(1, maxOrder).extend({
+    description: z.string().min(1, 'Обязательное поле'),
+  })
 
 export type ChapterFormValues = z.infer<typeof chapterSchema>
-export type SubchapterFormValues = z.infer<typeof subchapterSchema>
+export type SubchapterFormValues = z.infer<
+  ReturnType<typeof createSubchapterSchema>
+>

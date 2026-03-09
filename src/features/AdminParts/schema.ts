@@ -6,12 +6,7 @@ export const baseOrderSchema = z
     message: 'Введите число',
   })
   .refine((val) => !isNaN(val), { message: 'Введите число' })
-  .pipe(
-    z
-      .number()
-      .int('Должно быть целым числом')
-      .positive('Должно быть положительным'),
-  )
+  .pipe(z.number().int('Только целые').positive('Должно быть > 0'))
 
 // Общая схема для сущностей (часть, глава), имеющих заголовок и порядок
 export const entitySchema = z.object({

@@ -35,10 +35,19 @@ export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
           <p className='text-primary my-2'>{chapter.title}</p>
 
           {chapter.subchapters.map((sub) => (
-            <SubchapterItem key={sub.id} chapterId={id} subchapter={sub} />
+            <SubchapterItem
+              key={sub.id}
+              chapterId={id}
+              subchapter={sub}
+              maxOrder={nextOrder - 1}
+            />
           ))}
 
-          <SubchapterForm chapterId={id} nextOrder={nextOrder} />
+          <SubchapterForm
+            key={nextOrder}
+            chapterId={id}
+            nextOrder={nextOrder}
+          />
 
           <div className='bg-background sticky bottom-0 mt-4 flex justify-between gap-5 border-t py-4'>
             <button
