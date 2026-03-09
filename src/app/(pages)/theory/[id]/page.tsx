@@ -22,7 +22,7 @@ export default async function Theory({
                 {subchapter.title}
               </h2>
               <MarkdownRenderer
-                className='mt-3 leading-relaxed text-white/90 indent-4'
+                className='mt-3 leading-relaxed text-white/90'
                 content={subchapter.description}
               />
             </div>

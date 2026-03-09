@@ -34,7 +34,7 @@ const components: Components = {
       {children}
     </ol>
   ),
-  li: ({ children }) => <li className='mb-1'>{children}</li>,
+  li: ({ children }) => <li className='mb-1 indent-0'>{children}</li>,
   a: ({ href, children }) => (
     <a
       href={href || '#'}
@@ -45,11 +45,13 @@ const components: Components = {
       {children}
     </a>
   ),
-  code: ({ className, children }) => (
-    <code className={className}>{children}</code>
+  code: ({ children }) => (
+    <code className='bg-dark-gray rounded px-1 py-0.5'>
+      {children}
+    </code>
   ),
   pre: ({ children }) => (
-    <pre className='bg-dark-gray custom-scrollbar w-full overflow-auto rounded-lg p-1 font-mono max-md:text-sm md:w-fit'>
+    <pre className='bg-dark-gray custom-scrollbar mb-4 w-full overflow-auto rounded-lg px-2 py-1 indent-0 font-mono max-md:text-sm md:w-fit'>
       {children}
     </pre>
   ),
