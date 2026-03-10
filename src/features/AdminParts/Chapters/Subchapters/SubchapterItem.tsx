@@ -54,7 +54,10 @@ export function SubchapterItem({
         onSubmit={onSubmit}
         className='flex flex-col items-start border-t py-4'
       >
-        <EntityInputs titleLabel='Заголовок' />
+        <EntityInputs
+          key={`${chapterId}-${subchapter.id}`}
+          titleLabel='Заголовок'
+        />
         <Textarea
           wrapperCN='w-full'
           label='Описание'
