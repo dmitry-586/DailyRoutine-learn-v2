@@ -55,7 +55,7 @@ export function SubchapterItem({
         className='flex flex-col items-start border-t py-4'
       >
         <EntityInputs
-          key={`${chapterId}-${subchapter.id}`}
+          key={`${chapterId}-${subchapter.order}`}
           titleLabel='Заголовок'
         />
         <Textarea
