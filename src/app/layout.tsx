@@ -10,8 +10,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Project Template',
-  description: 'Next.js project template',
+  title: 'Daily Learning',
+  description:
+    'Платформа для ежедневного изучения теории и практики веб-программирования',
 }
 
 export default function RootLayout({

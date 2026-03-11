@@ -5,25 +5,18 @@ import { baseOrderSchema, entitySchema } from '../schema'
 export const createChapterSchema = (minOrder: number, maxOrder: number) =>
   entitySchema.extend({
     order: baseOrderSchema
-      .refine((value) => value >= minOrder, {
-        message: `Минимум: ${minOrder}`,
-      })
-      .refine((value) => value <= maxOrder, {
-        message: `Максимум: ${maxOrder}`,
-      }),
+      .min(minOrder, `Минимум: ${minOrder}`)
+      .max(maxOrder, `Максимум: ${maxOrder}`),
   })
-
-// Базовая схема главы
-export const chapterSchema = entitySchema
 
 // Схема подглавы
 export const createSubchapterSchema = (maxOrder: number) =>
-  createChapterSchema(1, maxOrder).extend({
-    title: z.string(),
+  entitySchema.extend({
+    order: baseOrderSchema.min(1).max(maxOrder, `Максимум: ${maxOrder}`),
     description: z.string().min(1, 'Обязательное поле'),
   })
 
-export type ChapterFormValues = z.infer<typeof chapterSchema>
+export type ChapterFormValues = z.infer<typeof entitySchema>
 export type SubchapterFormValues = z.infer<
   ReturnType<typeof createSubchapterSchema>
 >

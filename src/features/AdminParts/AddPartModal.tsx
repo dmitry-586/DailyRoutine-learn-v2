@@ -3,7 +3,7 @@
 import { useCreatePart } from '@/services/theory'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
-import { PartFormValues, partSchema } from './schema'
+import { createPartSchema, PartFormValues } from './schema'
 import { BaseModal, EntityInputs, FormFooter } from './ui'
 
 interface AddPartModalProps {
@@ -21,10 +21,13 @@ export function AddPartModal({
 
   const methods = useForm<PartFormValues>({
     mode: 'onChange',
-    resolver: zodResolver(partSchema),
-    defaultValues: {
-      order: partsCount + 1,
-    },
+    resolver: zodResolver(createPartSchema(partsCount + 1)),
+    values: isOpen
+      ? {
+          title: '',
+          order: partsCount + 1,
+        }
+      : undefined,
   })
 
   const onSubmit = methods.handleSubmit((data) => {
