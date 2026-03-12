@@ -1,6 +1,5 @@
 import { useDeletePart } from '@/services/theory'
-import { Button } from '@/shared/ui'
-import { BaseModal } from './ui'
+import { Button, Modal } from '@/shared/ui'
 
 interface DeletePartModalProps {
   partId: string
@@ -16,7 +15,7 @@ export function DeletePartModal({
   const deletePart = useDeletePart()
 
   return (
-    <BaseModal isOpen={isOpen} onClose={handleClose} title='Удалить всю часть'>
+    <Modal isOpen={isOpen} onClose={handleClose} title='Удалить всю часть'>
       <h3 className='mt-3'>Вы уверены, что хотите удалить всю часть?</h3>
       <div className='mt-5 flex justify-end gap-5'>
         <Button variant='red' onClick={() => deletePart.mutate(partId)}>
@@ -24,6 +23,6 @@ export function DeletePartModal({
         </Button>
         <Button onClick={handleClose}>Вернуться</Button>
       </div>
-    </BaseModal>
+    </Modal>
   )
 }

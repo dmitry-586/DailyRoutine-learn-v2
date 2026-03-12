@@ -1,10 +1,11 @@
 'use client'
 
 import { useCreatePart } from '@/services/theory'
+import { Modal } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { createPartSchema, PartFormValues } from './schema'
-import { BaseModal, EntityInputs, FormFooter } from './ui'
+import { EntityInputs, FormFooter } from './ui'
 
 interface AddPartModalProps {
   partsCount: number
@@ -40,11 +41,7 @@ export function AddPartModal({
   })
 
   return (
-    <BaseModal
-      isOpen={isOpen}
-      onClose={handleClose}
-      title='Добавить новую часть'
-    >
+    <Modal isOpen={isOpen} onClose={handleClose} title='Добавить новую часть'>
       <FormProvider {...methods}>
         <form onSubmit={onSubmit} className='mt-5 flex flex-col gap-4'>
           <EntityInputs
@@ -60,6 +57,6 @@ export function AddPartModal({
           />
         </form>
       </FormProvider>
-    </BaseModal>
+    </Modal>
   )
 }

@@ -1,9 +1,10 @@
 'use client'
 
 import { useCreateChapter } from '@/services/theory'
+import { Modal } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
-import { BaseModal, EntityInputs, FormFooter } from '../ui'
+import { EntityInputs, FormFooter } from '../ui'
 import { ChapterFormValues, createChapterSchema } from './schema'
 
 interface ChapterModalProps {
@@ -46,11 +47,7 @@ export function AddChapterModal({
   })
 
   return (
-    <BaseModal
-      isOpen={isOpen}
-      onClose={handleClose}
-      title='Добавить новую главу'
-    >
+    <Modal isOpen={isOpen} onClose={handleClose} title='Добавить новую главу'>
       <FormProvider {...methods}>
         <form onSubmit={onSubmit} className='mt-5 flex flex-col gap-4'>
           <EntityInputs
@@ -66,6 +63,6 @@ export function AddChapterModal({
           />
         </form>
       </FormProvider>
-    </BaseModal>
+    </Modal>
   )
 }

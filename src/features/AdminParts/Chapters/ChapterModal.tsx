@@ -2,9 +2,8 @@
 
 import { useChapterById } from '@/services/hooks'
 import { useDeleteChapter } from '@/services/theory'
-import { Button } from '@/shared/ui'
+import { Button, Modal } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
-import { BaseModal } from '../ui'
 import { SubchapterForm } from './Subchapters/SubchapterForm'
 import { SubchapterItem } from './Subchapters/SubchapterItem'
 
@@ -21,11 +20,11 @@ export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
   const nextOrder = (chapter?.subchapters.at(-1)?.order ?? 0) + 1
 
   return (
-    <BaseModal
+    <Modal
       isOpen={isOpen}
       onClose={handleClose}
       title={`Редактирование главы ${chapter?.order ?? ''}`}
-      className='max-w-3xl pb-0 max-md:max-h-svh max-md:rounded-none max-md:border-none max-sm:p-4 max-sm:pb-0'
+      className='max-w-3xl pb-0 max-md:max-h-svh max-md:rounded-none max-md:border-none max-sm:px-4'
       wrapperCN='max-md:p-0'
     >
       {isLoading && <Loader2 className='mx-auto animate-spin' />}
@@ -71,6 +70,6 @@ export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
           </div>
         </>
       )}
-    </BaseModal>
+    </Modal>
   )
 }
