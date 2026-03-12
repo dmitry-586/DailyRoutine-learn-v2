@@ -12,6 +12,7 @@ export const createChapterSchema = (minOrder: number, maxOrder: number) =>
 // Схема подглавы
 export const createSubchapterSchema = (maxOrder: number) =>
   entitySchema.extend({
+    title: z.string(),
     order: baseOrderSchema.min(1).max(maxOrder, `Максимум: ${maxOrder}`),
     description: z.string().min(1, 'Обязательное поле'),
   })

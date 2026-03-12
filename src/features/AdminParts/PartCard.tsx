@@ -1,14 +1,12 @@
 'use client'
 
-import { Part } from '@/services'
-import { useWindowWidth } from '@/services/hooks'
+import { Part, useDeletePart, useWindowWidth } from '@/services'
 import { cn } from '@/shared/lib'
-import { Button } from '@/shared/ui'
+import { Button, ConfirmModal } from '@/shared/ui'
 import { Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { FormProvider } from 'react-hook-form'
 import { AddChapterModal, ChapterCard } from './Chapters'
-import { DeletePartModal } from './DeletePartModal'
 import { EntityInputs } from './ui'
 import { usePartEditor } from './usePartEditor'
 
@@ -21,6 +19,8 @@ export function PartCard({ part, chaptersCount }: PartCardProps) {
   const isMobile = useWindowWidth() <= 640
   const [isOpen, setIsOpen] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
+
+  const deletePart = useDeletePart()
 
   const minOrder = chaptersCount + 1
   const maxOrder = chaptersCount + part.chapters.length
@@ -81,10 +81,13 @@ export function PartCard({ part, chaptersCount }: PartCardProps) {
         maxOrder={maxOrder + 1}
         handleClose={() => setIsOpen(false)}
       />
-      <DeletePartModal
-        partId={part.id}
+      <ConfirmModal
         isOpen={isDelete}
-        handleClose={() => setIsDelete(false)}
+        onConfirm={() => deletePart.mutate(part.id)}
+        onCancel={() => setIsDelete(false)}
+        title='Подтвердите удаление'
+        message='Вы уверены, что хотите удалить эту часть?'
+        deleteMessage='Удалить'
       />
     </FormProvider>
   )
