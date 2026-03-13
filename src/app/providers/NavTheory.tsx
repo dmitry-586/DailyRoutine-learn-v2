@@ -60,7 +60,7 @@ export function NavTheory() {
           </div>
         </section>
       )}
-      <div className='sticky bottom-5 left-0 z-20 flex gap-3 sm:gap-5'>
+      <div className='sticky bottom-5 left-0 z-20 flex w-fit gap-3 sm:gap-5'>
         <HomeButton className='size-11 p-2.5' />
         <BurgerButton
           className='size-11 p-2.5'
