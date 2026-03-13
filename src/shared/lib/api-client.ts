@@ -27,19 +27,15 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true
 
       if (!refreshPromise) {
-        refreshPromise = apiClient
-          .post('/auth/refresh')
-          .catch((refreshError) => {
-            refreshPromise = null
-            throw refreshError
-          })
+        refreshPromise = apiClient.post('/auth/refresh').finally(() => {
+          refreshPromise = null
+        })
       }
 
       try {
         await refreshPromise
         return apiClient(originalRequest)
       } catch (refreshError) {
-        refreshPromise = null
         return Promise.reject(error)
       }
     }
