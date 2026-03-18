@@ -1,4 +1,4 @@
-import { partApi } from '@/services/theory/api'
+import { partApi } from '@/services/theory'
 import { redirect } from 'next/navigation'
 
 export default async function TheoryPage() {
