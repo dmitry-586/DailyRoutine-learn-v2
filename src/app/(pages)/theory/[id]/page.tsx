@@ -15,7 +15,7 @@ export default async function Theory({
   )
 
   return (
-    <div className='flex flex-1 flex-col gap-3 py-5'>
+    <div className='flex max-w-4xl flex-1 flex-col gap-3 py-5 sm:mx-auto'>
       <h1 className='text-lg font-semibold sm:text-xl lg:text-2xl'>
         Глава: {chapter.order} - {chapter.title}
       </h1>
