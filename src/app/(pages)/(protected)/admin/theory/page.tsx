@@ -3,7 +3,7 @@
 import { AddPartModal, PartCard } from '@/features/AdminParts'
 import { useParts } from '@/services/theory'
 import { Button, HomeButton } from '@/shared/ui'
-import { Loader2 } from 'lucide-react'
+import { Loader } from '@/shared/ui/Loader'
 import { useMemo, useState } from 'react'
 
 export default function TheoryAdmin() {
@@ -23,7 +23,7 @@ export default function TheoryAdmin() {
     <section className='flex h-full flex-1 flex-col pb-5'>
       <div className='mt-5 flex flex-1 flex-col'>
         {isLoading && (
-          <Loader2 className='text-primary m-auto mx-auto animate-spin' />
+          <Loader />
         )}
 
         {!isLoading && isEmpty && (

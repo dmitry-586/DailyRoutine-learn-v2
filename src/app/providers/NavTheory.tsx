@@ -1,6 +1,7 @@
 'use client'
 
 import { BurgerButton } from '@/features'
+import { useTheoryStore } from '@/services/stores/theoryStore'
 import { useParts } from '@/services/theory'
 import { HomeButton } from '@/shared/ui'
 import Link from 'next/link'
@@ -12,6 +13,7 @@ export function NavTheory() {
   const { parts } = useParts()
   const pathname = usePathname()
   const currentChapter = pathname.split('/theory/')[1]
+  const setCurrentChapter = useTheoryStore((state) => state.setCurrentChapter)
 
   return (
     <>
@@ -38,10 +40,17 @@ export function NavTheory() {
                           {isActive && (
                             <span className='bg-primary absolute h-full w-0.5 rounded-full sm:top-1 sm:-left-[17.5px] sm:h-5' />
                           )}
-
                           <Link
                             href={`/theory/${chapter.id}`}
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => {
+                              setIsOpen(false)
+                              setCurrentChapter(chapter.id)
+                            }}
+                            ref={(node) => {
+                              if (node && isActive) {
+                                node.scrollIntoView({ block: 'center' })
+                              }
+                            }}
                             className={`block rounded-r-md px-2 py-1 text-sm transition sm:rounded-md ${
                               isActive
                                 ? 'bg-muted text-primary font-medium'

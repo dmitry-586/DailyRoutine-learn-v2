@@ -1,16 +1,25 @@
-import { partApi } from '@/services/theory'
+'use client'
+
+import { useTheoryStore } from '@/services/stores/theoryStore'
+import { useParts } from '@/services/theory'
 import { redirect } from 'next/navigation'
+import TheoryLoading from './loading'
 
-export default async function TheoryPage() {
-  const parts = await partApi.getAll()
-  const sortedParts = [...parts].sort((a, b) => a.order - b.order)
+export default function TheoryPage() {
+  const currentChapterId = useTheoryStore((state) => state.currentChapter)
+  const { parts, isLoading } = useParts()
 
-  for (const part of sortedParts) {
-    const firstChapter = [...part.chapters].sort((a, b) => a.order - b.order)[0]
-    if (firstChapter) {
-      redirect(`/theory/${firstChapter.id}`)
-    }
+  if (isLoading) return <TheoryLoading />
+
+  const targetId = currentChapterId || parts[0]?.chapters[0]?.id
+
+  if (targetId) {
+    redirect(`/theory/${targetId}`)
   }
 
-  return <div>Учебник пуст</div>
+  return (
+    <div className='text-muted-foreground flex flex-1 items-center justify-center text-sm'>
+      Учебник пуст
+    </div>
+  )
 }

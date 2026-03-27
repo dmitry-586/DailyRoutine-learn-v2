@@ -2,7 +2,7 @@
 
 import { useChapterById, useDeleteChapter } from '@/services'
 import { Button, ConfirmModal, Modal } from '@/shared/ui'
-import { Loader2 } from 'lucide-react'
+import { Loader } from '@/shared/ui/Loader'
 import { useState } from 'react'
 import { SubchapterForm, SubchapterItem } from './Subchapters'
 
@@ -29,7 +29,7 @@ export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
         className='max-w-3xl pb-0 max-md:max-h-svh max-md:rounded-none max-md:border-none max-sm:px-4'
         wrapperCN='max-md:p-0'
       >
-        {isLoading && <Loader2 className='mx-auto animate-spin' />}
+        {isLoading && <Loader />}
 
         {chapter && (
           <>

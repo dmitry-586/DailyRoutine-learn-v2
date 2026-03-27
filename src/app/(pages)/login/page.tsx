@@ -2,7 +2,8 @@
 
 import { LoginForm } from '@/features/Login'
 import { useAuthStore } from '@/services/stores'
-import { ChevronLeft, Loader2 } from 'lucide-react'
+import { Loader } from '@/shared/ui/Loader'
+import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 
 export default function RegisterPage() {
@@ -39,7 +40,7 @@ export default function RegisterPage() {
           <LoginForm key={isLogin ? 'login' : 'signup'} isLogin={isLogin} />
         </>
       ) : (
-        <Loader2 className='text-primary mx-auto size-8 animate-spin' />
+        <Loader />
       )}
     </section>
   )
