@@ -1,4 +1,5 @@
 import type { Part } from '@/services'
+import { useEffect, useRef } from 'react'
 
 interface OverlayProps {
   open: boolean
@@ -8,6 +9,14 @@ interface OverlayProps {
 }
 
 export function Overlay({ open, parts, chapterId, onPick }: OverlayProps) {
+  const activeChapterRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    if (!open || !activeChapterRef.current) return
+
+    activeChapterRef.current.scrollIntoView({ block: 'center' })
+  }, [open, chapterId])
+
   if (!open) return null
 
   return (
@@ -36,11 +45,7 @@ export function Overlay({ open, parts, chapterId, onPick }: OverlayProps) {
                       <button
                         type='button'
                         onClick={() => onPick(chapter.id)}
-                        ref={(node) => {
-                          if (node && active) {
-                            node.scrollIntoView({ block: 'center' })
-                          }
-                        }}
+                        ref={active ? activeChapterRef : null}
                         className={`block w-full rounded-r-md px-2 py-1 text-left text-sm transition sm:rounded-md ${
                           active
                             ? 'bg-muted text-primary font-medium'

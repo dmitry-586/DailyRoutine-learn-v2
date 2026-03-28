@@ -1,29 +1,52 @@
 import type { Part } from '@/services'
-import type { ChapterPos } from '../types'
+import { useMemo } from 'react'
 
-export function useNavPosition(parts: Part[], chapterId: string) {
-  const chapterIds: string[] = []
-  let pos: ChapterPos = { part: null, inPart: -1, global: -1 }
-  let global = 0
+type NavPosition = {
+  part: Part | null
+  inPart: number | null
+  prevChapterId: string | null
+  nextChapterId: string | null
+}
 
-  for (const part of parts) {
-    for (let inPart = 0; inPart < part.chapters.length; inPart += 1) {
-      const id = part.chapters[inPart].id
-      chapterIds.push(id)
-
-      if (id === chapterId) {
-        pos = { part, inPart, global }
-      }
-
-      global += 1
+function getNavPosition(parts: Part[], chapterId: string): NavPosition {
+  if (!chapterId) {
+    return {
+      part: null,
+      inPart: null,
+      prevChapterId: null,
+      nextChapterId: null,
     }
   }
 
-  const prevChapterId = pos.global > 0 ? chapterIds[pos.global - 1] : null
-  const nextChapterId =
-    pos.global >= 0 && pos.global < chapterIds.length - 1
-      ? chapterIds[pos.global + 1]
-      : null
+  const chapters = parts.flatMap((part) =>
+    part.chapters.map((chapter, index) => ({
+      id: chapter.id,
+      part,
+      inPart: index,
+    })),
+  )
 
-  return { pos, prevChapterId, nextChapterId, chapterIds }
+  const currentIndex = chapters.findIndex((chapter) => chapter.id === chapterId)
+
+  if (currentIndex === -1) {
+    return {
+      part: null,
+      inPart: null,
+      prevChapterId: null,
+      nextChapterId: null,
+    }
+  }
+
+  const current = chapters[currentIndex]
+
+  return {
+    part: current.part,
+    inPart: current.inPart,
+    prevChapterId: chapters[currentIndex - 1]?.id ?? null,
+    nextChapterId: chapters[currentIndex + 1]?.id ?? null,
+  }
+}
+
+export function useNavPosition(parts: Part[], chapterId: string) {
+  return useMemo(() => getNavPosition(parts, chapterId), [parts, chapterId])
 }

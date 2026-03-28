@@ -1,37 +1,54 @@
-import type { NavActions, NavView } from '../types'
+import type { Part } from '@/services'
 import { ArrowButton } from './ArrowButton'
 import { Indicators } from './Indicators'
 
 interface SwitcherProps {
-  view: Pick<NavView, 'part' | 'inPart' | 'hasPrev' | 'hasNext'>
-  actions: Pick<NavActions, 'prev' | 'next' | 'goToInPart'>
+  part: Part | null
+  inPart: number
+  hasPrev: boolean
+  hasNext: boolean
+  onPrev: () => void
+  onNext: () => void
+  onPick: (chapterId: string) => void
 }
 
-export function Switcher({ view, actions }: SwitcherProps) {
-  const part = view.part
-
+export function Switcher({
+  part,
+  inPart,
+  hasPrev,
+  hasNext,
+  onPrev,
+  onNext,
+  onPick,
+}: SwitcherProps) {
   if (!part) return null
 
   return (
-    <nav className='rounded-full border border-white/20 bg-white/10 p-1.5 shadow-sm backdrop-blur-md transition-colors hover:border-white/30'>
+    <nav className='pointer-events-auto rounded-full border border-white/20 bg-white/10 p-1.5 shadow-sm backdrop-blur-md transition-colors hover:border-white/30'>
       <div className='flex items-center gap-2 sm:gap-3'>
         <ArrowButton
           direction='prev'
-          disabled={!view.hasPrev}
-          onClick={actions.prev}
+          disabled={!hasPrev}
+          onClick={onPrev}
           label='Предыдущая глава'
         />
 
         <Indicators
           chapters={part.chapters}
-          activeIndex={view.inPart}
-          onPick={(index) => actions.goToInPart(part.id, index)}
+          activeIndex={inPart}
+          onPick={(index) => {
+            const chapter = part.chapters[index]
+
+            if (chapter) {
+              onPick(chapter.id)
+            }
+          }}
         />
 
         <ArrowButton
           direction='next'
-          disabled={!view.hasNext}
-          onClick={actions.next}
+          disabled={!hasNext}
+          onClick={onNext}
           label='Следующая глава'
         />
       </div>

@@ -23,16 +23,16 @@ export function useNavSync({
     if (!chapterId) return
 
     setCurrentChapter(chapterId)
+  }, [chapterId, setCurrentChapter])
 
-    const neighbors = [prevChapterId, nextChapterId].filter(
-      (id): id is string => Boolean(id) && id !== chapterId,
-    )
+  useEffect(() => {
+    if (!chapterId) return
 
-    for (const id of neighbors) {
-      if (prefetchedRef.current.has(id)) continue
+    for (const id of [prevChapterId, nextChapterId]) {
+      if (!id || id === chapterId || prefetchedRef.current.has(id)) continue
 
       prefetchedRef.current.add(id)
       router.prefetch(`/theory/${id}`)
     }
-  }, [chapterId, nextChapterId, prevChapterId, router, setCurrentChapter])
+  }, [chapterId, nextChapterId, prevChapterId, router])
 }

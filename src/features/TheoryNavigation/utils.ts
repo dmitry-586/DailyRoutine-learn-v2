@@ -21,17 +21,3 @@ export function chapterIdFromPath(pathname: string) {
 
   return segments[theoryIndex + 1] ?? ''
 }
-
-export function findGlobalIndex(parts: Part[], partId: string, inPart: number) {
-  let global = 0
-
-  for (const part of parts) {
-    if (part.id === partId) {
-      return global + inPart
-    }
-
-    global += part.chapters.length
-  }
-
-  return -1
-}

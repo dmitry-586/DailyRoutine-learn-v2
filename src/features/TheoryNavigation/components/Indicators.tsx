@@ -12,6 +12,7 @@ export function Indicators({ chapters, activeIndex, onPick }: IndicatorsProps) {
     <div className='flex max-w-[40vw] gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
       {chapters.map((chapter, index) => (
         <button
+          type='button'
           key={chapter.id}
           onClick={() => onPick(index)}
           className={cn(
