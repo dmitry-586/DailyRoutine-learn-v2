@@ -15,7 +15,7 @@ interface ChapterDialogProps {
 export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
   const [isDelete, setIsDelete] = useState(false)
 
-  const { chapter, isLoading } = useChapterById(id)
+  const { chapter, isLoading } = useChapterById(id, isOpen)
   const deleteChapter = useDeleteChapter()
 
   const nextOrder = (chapter?.subchapters.at(-1)?.order ?? 0) + 1
@@ -26,10 +26,10 @@ export function ChapterModal({ id, isOpen, handleClose }: ChapterDialogProps) {
         isOpen={isOpen}
         onClose={handleClose}
         title={`Редактирование главы ${chapter?.order ?? ''}`}
-        className='max-w-3xl pb-0 max-md:max-h-svh max-md:rounded-none max-md:border-none max-sm:px-4'
+        className='min-h-[50vh] max-w-3xl pb-0 max-md:max-h-svh max-md:rounded-none max-md:border-none max-sm:px-4'
         wrapperCN='max-md:p-0'
       >
-        {isLoading && <Loader />}
+        {isLoading && <Loader className='' />}
 
         {chapter && (
           <>

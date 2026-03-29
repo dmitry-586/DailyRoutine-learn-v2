@@ -105,10 +105,11 @@ function useChapters() {
   }
 }
 
-function useChapterById(id: string) {
+function useChapterById(id: string, enabled = true) {
   const { data, isPending } = useQuery({
     queryKey: queryKeys.chapter.byId(id),
     queryFn: () => chapterApi.getById(id),
+    enabled,
     staleTime: STALE_TIME,
     gcTime: GC_TIME,
   })

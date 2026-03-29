@@ -55,7 +55,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           {label}
         </label>
       )}
-      <div className='bg-gray/60 hover:bg-gray/70 flex items-center rounded-2xl border border-white/10 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-white/30 active:bg-white/10'>
+      <div className='bg-gray/60 hover:bg-gray/70 flex items-center rounded-2xl border border-white/10 shadow-sm transition-all duration-300 hover:border-white/30 active:bg-white/10'>
         {LeftIcon && (
           <LeftIcon
             {...INPUT_ICON}

@@ -107,7 +107,9 @@ export const Modal = ({
           </button>
         </header>
 
-        <section id={contentId}>{children}</section>
+        <section className='flex flex-1 flex-col' id={contentId}>
+          {children}
+        </section>
       </div>
 
       <span

@@ -42,7 +42,9 @@ export function ChapterCard({ chapter, isFirst, index }: ChapterCardProps) {
         </Button>
       )}
 
-      <ChapterModal id={chapter.id} isOpen={isOpen} handleClose={handleClose} />
+      {isOpen && (
+        <ChapterModal id={chapter.id} isOpen={isOpen} handleClose={handleClose} />
+      )}
     </div>
   )
 }
