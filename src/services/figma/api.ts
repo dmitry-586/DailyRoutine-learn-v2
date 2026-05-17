@@ -71,6 +71,9 @@ const figmaApi = {
     const { data } = await api.post<FigmaMediaResponse>(
       FIGMA_MEDIA_URL,
       formData,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      },
     )
     return data
   },
