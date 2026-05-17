@@ -40,12 +40,8 @@ const figmaApi = {
   async updateChapter(
     id: string,
     payload: FigmaChapterRequest,
-  ): Promise<FigmaChapter> {
-    const { data } = await api.patch<FigmaChapter>(
-      `${FIGMA_CHAPTERS_URL}/${id}`,
-      payload,
-    )
-    return data
+  ): Promise<void> {
+    await api.patch(`${FIGMA_CHAPTERS_URL}/${id}`, payload)
   },
 
   async deleteChapter(id: string): Promise<void> {
@@ -60,12 +56,8 @@ const figmaApi = {
   async updateSection(
     id: string,
     payload: FigmaSectionRequest,
-  ): Promise<FigmaSection> {
-    const { data } = await api.patch<FigmaSection>(
-      `${FIGMA_SECTIONS_URL}/${id}`,
-      payload,
-    )
-    return data
+  ): Promise<void> {
+    await api.patch(`${FIGMA_SECTIONS_URL}/${id}`, payload)
   },
 
   async deleteSection(id: string): Promise<void> {

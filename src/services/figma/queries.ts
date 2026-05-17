@@ -15,7 +15,7 @@ function handleError(error: unknown, fallbackMessage: string) {
 }
 
 function useFigmaChapters() {
-  const { data, isPending, isError } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: queryKeys.figma.chapters,
     queryFn: figmaApi.getChapters,
     staleTime: STALE_TIME,
@@ -25,16 +25,15 @@ function useFigmaChapters() {
   return {
     chapters: data ?? [],
     isLoading: isPending,
-    isError,
     isEmpty: !isPending && (data?.length ?? 0) === 0,
   }
 }
 
 function useFigmaChapterById(id: string, enabled = true) {
-  const { data, isPending, isError } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: queryKeys.figma.chapterById(id),
     queryFn: () => figmaApi.getChapter(id),
-    enabled: enabled && Boolean(id),
+    enabled,
     staleTime: STALE_TIME,
     gcTime: GC_TIME,
   })
@@ -42,7 +41,6 @@ function useFigmaChapterById(id: string, enabled = true) {
   return {
     chapter: data,
     isLoading: isPending,
-    isError,
   }
 }
 
@@ -112,7 +110,6 @@ function useUpdateFigmaSection(chapterId: string) {
     mutationFn: ({ id, data }: { id: string; data: FigmaSectionRequest }) =>
       figmaApi.updateSection(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.figma.chapters })
       queryClient.invalidateQueries({
         queryKey: queryKeys.figma.chapterById(chapterId),
       })

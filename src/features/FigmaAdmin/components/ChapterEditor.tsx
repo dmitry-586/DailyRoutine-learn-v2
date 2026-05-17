@@ -10,14 +10,14 @@ interface ChapterEditorProps {
 }
 
 export function ChapterEditor({ chapterId }: ChapterEditorProps) {
-  const { chapter, isLoading, isError } = useFigmaChapterById(chapterId)
+  const { chapter, isLoading } = useFigmaChapterById(chapterId)
   const sections = chapter?.sections ?? []
   const nextOrder = (sections.at(-1)?.order ?? 0) + 1
   const maxOrder = sections.length
 
   if (isLoading) return <Loader />
 
-  if (isError || !chapter) {
+  if (!chapter) {
     return <p className='text-primary mx-auto mt-8 text-sm'>Глава не найдена</p>
   }
 
