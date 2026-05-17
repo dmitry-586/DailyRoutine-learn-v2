@@ -1,4 +1,3 @@
-import 'highlight.js/styles/github-dark.css'
 import React from 'react'
 import ReactMarkdown, { Components } from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
@@ -44,6 +43,14 @@ const components: Components = {
     >
       {children}
     </a>
+  ),
+  img: ({ src, alt }) => (
+    <img
+      src={src ?? ''}
+      alt={alt ?? ''}
+      className='my-5 max-h-[70vh] w-full rounded-lg border border-white/10 object-contain shadow-sm'
+      loading='lazy'
+    />
   ),
   code: ({ children }) => (
     <code className='bg-dark-gray rounded px-1 py-0.5 indent-0 wrap-break-word'>

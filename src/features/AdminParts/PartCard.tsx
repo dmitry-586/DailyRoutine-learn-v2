@@ -3,11 +3,11 @@
 import { Part, useDeletePart, useWindowWidth } from '@/services'
 import { cn } from '@/shared/lib'
 import { Button, ConfirmModal } from '@/shared/ui'
+import { EntityInputs } from '@/shared/ui/Form'
 import { Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { FormProvider } from 'react-hook-form'
 import { AddChapterModal, ChapterCard } from './Chapters'
-import { EntityInputs } from './ui'
 import { usePartEditor } from './usePartEditor'
 
 interface PartCardProps {

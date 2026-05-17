@@ -1,5 +1,7 @@
 export * from './Button/index'
+export * from './ChapterContent/index'
 export * from './Input/index'
 export * from './Loader/index'
+export * from './MarkdownRenderer/index'
 export * from './Modal/index'
 export * from './Textarea/index'

@@ -1,4 +1,5 @@
 export * from './hooks'
+export * from './figma'
 export * from './stores'
 export {
   useChapterById,

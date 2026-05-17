@@ -1,5 +1,5 @@
+import { baseOrderSchema, entitySchema } from '@/shared/lib'
 import z from 'zod'
-import { baseOrderSchema, entitySchema } from '../schema'
 
 // Схема для добавления главы с проверкой диапазона порядка
 export const createChapterSchema = (minOrder: number, maxOrder: number) =>

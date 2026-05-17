@@ -1,8 +1,6 @@
 'use client'
 
-import { useWindowWidth } from '@/services/hooks'
 import { cn } from '@/shared/lib'
-import { BookCopy, BookText, Headphones, LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -10,38 +8,37 @@ interface AdminLinksProps {
   id: number
   href: string
   title: string
-  icon: LucideIcon
 }
 
 const AdminLinks: AdminLinksProps[] = [
   {
     id: 1,
     href: '/admin/theory',
-    title: 'Теория',
-    icon: BookText,
+    title: 'Web-разработка',
   },
+  // {
+  //   id: 2,
+  //   href: '/admin/cards',
+  //   title: 'Карточки',
+  // },
+  // {
+  //   id: 3,
+  //   href: '/admin/podcasts',
+  //   title: 'Подкасты',
+  // },
   {
-    id: 2,
-    href: '/admin/cards',
-    title: 'Карточки',
-    icon: BookCopy,
-  },
-  {
-    id: 3,
-    href: '/admin/podcasts',
-    title: 'Подкасты',
-    icon: Headphones,
+    id: 4,
+    href: '/admin/figma',
+    title: 'Figma',
   },
 ]
 
 export function NavAdmin() {
   const pathname = usePathname()
-  const isMobile = useWindowWidth() <= 640
 
   return (
     <nav className='mt-5 flex justify-center gap-5'>
       {AdminLinks.map((el) => {
-        const Icon = el.icon
         return (
           <Link
             key={el.id}
@@ -52,7 +49,6 @@ export function NavAdmin() {
                 'border-primary/50 bg-primary/20 hover:bg-primary/30 transition-colors duration-200',
             )}
           >
-            {!isMobile && <Icon className='size-4' />}
             <h3 className='font-medium'>{el.title}</h3>
           </Link>
         )

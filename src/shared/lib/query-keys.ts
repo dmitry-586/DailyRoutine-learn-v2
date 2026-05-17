@@ -5,4 +5,8 @@ export const queryKeys = {
     all: ['chapter'] as const,
     byId: (id: string) => ['chapter', id] as const,
   },
+  figma: {
+    chapters: ['figma', 'chapters'] as const,
+    chapterById: (id: string) => ['figma', 'chapters', id] as const,
+  },
 }

@@ -2,10 +2,10 @@
 
 import { useCreatePart } from '@/services/theory'
 import { Modal } from '@/shared/ui'
+import { EntityInputs, FormFooter } from '@/shared/ui/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { createPartSchema, PartFormValues } from './schema'
-import { EntityInputs, FormFooter } from './ui'
 
 interface AddPartModalProps {
   partsCount: number

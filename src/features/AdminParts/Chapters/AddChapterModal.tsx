@@ -2,9 +2,9 @@
 
 import { useCreateChapter } from '@/services/theory'
 import { Modal } from '@/shared/ui'
+import { EntityInputs, FormFooter } from '@/shared/ui/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
-import { EntityInputs, FormFooter } from '../ui'
 import { ChapterFormValues, createChapterSchema } from './schema'
 
 interface ChapterModalProps {

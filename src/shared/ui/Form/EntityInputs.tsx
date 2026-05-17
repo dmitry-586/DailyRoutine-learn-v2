@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/shared/lib'
 import { Input } from '@/shared/ui'
 import { useFormContext } from 'react-hook-form'

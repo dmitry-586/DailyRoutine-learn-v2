@@ -1,0 +1,1 @@
+export { FigmaAdminPage } from './FigmaAdminPage'

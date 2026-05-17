@@ -1,5 +1,4 @@
 export * from './api'
-export { MarkdownRenderer } from './MarkdownRenderer'
 export {
   useChapterById,
   useChapters,

@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/shared/ui'
 
 interface FormFooterProps {

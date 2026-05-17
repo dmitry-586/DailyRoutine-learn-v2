@@ -3,9 +3,9 @@
 import { Chapter } from '@/services'
 import { useWindowWidth } from '@/services/hooks'
 import { Button } from '@/shared/ui'
+import { EntityInputs } from '@/shared/ui/Form'
 import { CircleAlert } from 'lucide-react'
 import { useState } from 'react'
-import { EntityInputs } from '../ui'
 import { ChapterModal } from './ChapterModal'
 
 interface ChapterCardProps {
@@ -43,7 +43,11 @@ export function ChapterCard({ chapter, isFirst, index }: ChapterCardProps) {
       )}
 
       {isOpen && (
-        <ChapterModal id={chapter.id} isOpen={isOpen} handleClose={handleClose} />
+        <ChapterModal
+          id={chapter.id}
+          isOpen={isOpen}
+          handleClose={handleClose}
+        />
       )}
     </div>
   )

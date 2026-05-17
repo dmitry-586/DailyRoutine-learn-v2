@@ -3,10 +3,10 @@
 import { useDeleteSubchapter, useUpdateSubchapter } from '@/services'
 import type { Subchapter } from '@/services/types'
 import { Button, ConfirmModal, Textarea } from '@/shared/ui'
+import { EntityInputs } from '@/shared/ui/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { EntityInputs } from '../../ui'
 import { createSubchapterSchema, type SubchapterFormValues } from '../schema'
 
 interface SubchapterItemProps {

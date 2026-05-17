@@ -2,9 +2,9 @@
 
 import { useCreateSubchapter } from '@/services/theory'
 import { Textarea } from '@/shared/ui'
+import { EntityInputs, FormFooter } from '@/shared/ui/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
-import { EntityInputs, FormFooter } from '../../ui'
 import { createSubchapterSchema, type SubchapterFormValues } from '../schema'
 
 interface SubchapterFormProps {
