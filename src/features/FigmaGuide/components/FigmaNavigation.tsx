@@ -5,7 +5,6 @@ import { Switcher } from '@/features/TheoryNavigation/components/Switcher'
 import { useFigmaChapters } from '@/services/figma'
 import { useFigmaStore } from '@/services/stores/figmaStore'
 import type { FigmaChapter, Part } from '@/services/types'
-import { sortByOrder } from '@/shared/lib'
 import { HomeButton } from '@/shared/ui'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -42,9 +41,7 @@ export function FigmaNavigation() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const setCurrentChapter = useFigmaStore((state) => state.setCurrentChapter)
-  const { chapters: rawChapters } = useFigmaChapters()
-
-  const chapters = useMemo(() => sortByOrder(rawChapters), [rawChapters])
+  const { chapters } = useFigmaChapters()
   const chapterId = chapterIdFromPath(pathname)
 
   const { inPart, prevChapterId, nextChapterId } = useMemo(

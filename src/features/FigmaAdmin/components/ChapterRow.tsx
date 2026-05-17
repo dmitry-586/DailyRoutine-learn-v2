@@ -2,7 +2,7 @@
 
 import { useDeleteFigmaChapter, useUpdateFigmaChapter } from '@/services/figma'
 import type { FigmaChapter } from '@/services/types'
-import { Button, ConfirmModal } from '@/shared/ui'
+import { Button, ConfirmModal, Modal } from '@/shared/ui'
 import { EntityInputs } from '@/shared/ui/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Save, Trash2 } from 'lucide-react'
@@ -12,7 +12,7 @@ import {
   createFigmaChapterSchema,
   type FigmaChapterFormValues,
 } from '../schema'
-import { FigmaChapterModal } from './FigmaChapterModal'
+import { ChapterEditor } from './ChapterEditor'
 
 interface ChapterRowProps {
   chapter: FigmaChapter
@@ -105,12 +105,15 @@ export function ChapterRow({ chapter, maxOrder }: ChapterRowProps) {
       />
 
       {isOpen && (
-        <FigmaChapterModal
-          chapterId={chapter.id}
-          chapterOrder={chapter.order}
+        <Modal
           isOpen={isOpen}
-          handleClose={() => setIsOpen(false)}
-        />
+          onClose={() => setIsOpen(false)}
+          title={`Редактирование главы ${chapter.order}`}
+          className='min-h-[50vh] max-w-3xl pb-0 max-md:max-h-svh max-md:rounded-none max-md:border-none max-sm:px-4'
+          wrapperCN='max-md:p-0'
+        >
+          <ChapterEditor chapterId={chapter.id} />
+        </Modal>
       )}
     </li>
   )

@@ -1,18 +1,16 @@
 'use client'
 
 import { useFigmaChapters } from '@/services/figma'
-import { sortByOrder } from '@/shared/lib'
-import { Button, HomeButton } from '@/shared/ui'
+import { Button, HomeButton, Modal } from '@/shared/ui'
 import { Loader } from '@/shared/ui/Loader'
-import { useMemo, useState } from 'react'
-import { ChapterRow, CreateChapterModal } from './components'
+import { useState } from 'react'
+import { ChapterRow } from './components/ChapterRow'
+import { CreateChapterForm } from './components/CreateChapterForm'
 
 export function FigmaAdminPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { chapters, isLoading, isEmpty } = useFigmaChapters()
-
-  const sortedChapters = useMemo(() => sortByOrder(chapters), [chapters])
-  const nextOrder = (sortedChapters.at(-1)?.order ?? 0) + 1
+  const nextOrder = (chapters.at(-1)?.order ?? 0) + 1
 
   return (
     <section className='flex h-full flex-1 flex-col pb-5'>
@@ -25,11 +23,11 @@ export function FigmaAdminPage() {
 
         {!isLoading && !isEmpty && (
           <ul className='mx-auto flex w-full max-w-3xl flex-col gap-4 sm:gap-8'>
-            {sortedChapters.map((chapter) => (
+            {chapters.map((chapter) => (
               <ChapterRow
                 key={chapter.id}
                 chapter={chapter}
-                maxOrder={sortedChapters.length}
+                maxOrder={chapters.length}
               />
             ))}
           </ul>
@@ -43,11 +41,17 @@ export function FigmaAdminPage() {
         </Button>
       </div>
 
-      <CreateChapterModal
+      <Modal
         isOpen={isModalOpen}
-        nextOrder={nextOrder}
-        handleClose={() => setIsModalOpen(false)}
-      />
+        onClose={() => setIsModalOpen(false)}
+        title='Добавить новую главу'
+      >
+        <CreateChapterForm
+          nextOrder={nextOrder}
+          onCreated={() => setIsModalOpen(false)}
+          onCancel={() => setIsModalOpen(false)}
+        />
+      </Modal>
     </section>
   )
 }

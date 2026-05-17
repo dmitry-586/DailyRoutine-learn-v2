@@ -1,9 +1,7 @@
 'use client'
 
 import { useFigmaChapterById } from '@/services/figma'
-import { sortByOrder } from '@/shared/lib'
 import { Loader } from '@/shared/ui/Loader'
-import { useMemo } from 'react'
 import { SectionEditor } from './SectionEditor'
 import { SectionForm } from './SectionForm'
 
@@ -13,11 +11,7 @@ interface ChapterEditorProps {
 
 export function ChapterEditor({ chapterId }: ChapterEditorProps) {
   const { chapter, isLoading, isError } = useFigmaChapterById(chapterId)
-
-  const sections = useMemo(
-    () => sortByOrder(chapter?.sections ?? []),
-    [chapter?.sections],
-  )
+  const sections = chapter?.sections ?? []
   const nextOrder = (sections.at(-1)?.order ?? 0) + 1
   const maxOrder = sections.length
 

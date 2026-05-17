@@ -1,36 +1,20 @@
-'use client'
-
-import { useFigmaChapterById } from '@/services/figma'
-import { sortByOrder } from '@/shared/lib'
+import { figmaApi } from '@/services/figma'
+import type { ApiError } from '@/shared/types/api'
 import { ChapterContent } from '@/shared/ui'
-import { Loader } from '@/shared/ui/Loader'
-import { useParams } from 'next/navigation'
-import { useMemo } from 'react'
 
-export default function FigmaChapterPage() {
-  const params = useParams<{ id: string }>()
-  const id = params.id
+export default async function FigmaChapterPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
 
-  const {
-    chapter,
-    isLoading: isChapterLoading,
-    isError,
-  } = useFigmaChapterById(id)
+  const chapter = await figmaApi.getChapter(id).catch((error) => {
+    if ((error as ApiError).status === 404) return null
+    throw error
+  })
 
-  const sections = useMemo(
-    () => sortByOrder(chapter?.sections ?? []),
-    [chapter?.sections],
-  )
-
-  if (isChapterLoading) {
-    return (
-      <div className='flex flex-1 items-center justify-center'>
-        <Loader />
-      </div>
-    )
-  }
-
-  if (isError || !chapter) {
+  if (!chapter) {
     return (
       <div className='flex flex-1 items-center justify-center text-sm text-white/60'>
         Глава не найдена
@@ -41,7 +25,7 @@ export default function FigmaChapterPage() {
   return (
     <ChapterContent
       title={`Глава: ${chapter.order} - ${chapter.title}`}
-      items={sections.map((section) => ({
+      items={chapter.sections.map((section) => ({
         id: section.id,
         title: section.title ? `${section.order}. ${section.title}` : undefined,
         content: section.content,
