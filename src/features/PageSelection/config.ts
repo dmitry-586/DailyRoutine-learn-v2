@@ -1,4 +1,4 @@
-import { BookText } from 'lucide-react'
+import { BookCopy, BookText } from 'lucide-react'
 import type { LinkProps } from './types'
 
 export const pageLinks: LinkProps[] = [
@@ -9,13 +9,13 @@ export const pageLinks: LinkProps[] = [
     href: '/theory',
     icon: BookText,
   },
-  // {
-  //   id: 2,
-  //   title: 'Карточки',
-  //   description: 'Интерактивное запоминание',
-  //   href: '/cards',
-  //   icon: BookCopy,
-  // },
+  {
+    id: 2,
+    title: 'Карточки',
+    description: 'Интерактивное запоминание',
+    href: '/cards',
+    icon: BookCopy,
+  },
   // {
   //   id: 3,
   //   title: 'Практика',
